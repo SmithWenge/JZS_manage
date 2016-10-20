@@ -17,6 +17,7 @@ public interface DeviceRepositoryI {
     Boolean cancle(Device device);
     boolean selectAddDiff(Device device);
     List<Device> selectWarningDeviceId();
+    List<Device> selectWarningDeviceIdTwo();
     Boolean updateWaringDevice(int deviceId);
     int selectNumOfWarning();
 }

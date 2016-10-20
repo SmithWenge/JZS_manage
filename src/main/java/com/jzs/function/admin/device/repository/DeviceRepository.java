@@ -60,7 +60,7 @@ public class DeviceRepository implements DeviceRepositoryI{
 
     @Override
     public Page<Device> query4Page(Device device, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("select * from (SELECT deviceId,deviceState,deviceNumber, deviceFactory, deviceModel, deviceTime,P.placeId, placeName,T.trackId,trackName,R.regionId,regionName, D.seat, stationNum,stationName, cancelTime, rollingTimes,cancelState,remark,pinTime FROM jzs_devicemanagement AS D LEFT JOIN jzs_place AS P ON D.place = P.placeId LEFT JOIN jzs_track AS T ON D.track = T.trackId LEFT JOIN jzs_region AS R ON D.region = R.regionId LEFT JOIN jzs_faultregister AS F ON D.place = F.place AND F.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.deleteFlag = 0");
+        StringBuilder sql = new StringBuilder("SELECT deviceId,deviceState,deviceNumber,deviceFactory,deviceModel,deviceTime,P.placeId,placeName,T.trackId,trackName,R.regionId,regionName,D.seat,stationNum,stationName,cancelTime,rollingTimes,cancelState,remark FROM jzs_devicemanagement AS D LEFT JOIN jzs_place AS P ON D.place = P.placeId LEFT JOIN jzs_track AS T ON D.track = T.trackId LEFT JOIN jzs_region AS R ON D.region = R.regionId WHERE D.deleteFlag = 0");
         List<Object> list = new ArrayList<Object>();
 
         Optional<Device> optional = Optional.fromNullable(device);
@@ -103,7 +103,7 @@ public class DeviceRepository implements DeviceRepositoryI{
 
         Object[] args = list.toArray();
 
-        sql.append(" ORDER BY pinTime DESC ) as a group by deviceId");
+        sql.append(" ORDER BY D.deviceNumber ASC ");
         try {
             return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowMapper());
         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class DeviceRepository implements DeviceRepositoryI{
                 deviceId
         };
 
-        return jdbcTemplate.queryForObject(sql,args,new SelectRowMapper());
+        return jdbcTemplate.queryForObject(sql,args,new Query4PageRowMapper());
     }
 
     @Override
@@ -189,7 +189,13 @@ public class DeviceRepository implements DeviceRepositoryI{
 
     @Override
     public List<Device> selectWarningDeviceId() {
-        String sql = "select deviceId from (select * from (SELECT deviceId,deviceState,deviceNumber, deviceFactory, deviceModel, deviceTime,P.placeId, placeName,T.trackId,trackName,R.regionId,regionName, D.seat, stationNum,stationName, cancelTime, rollingTimes,cancelState,remark,pinTime FROM jzs_devicemanagement AS D LEFT JOIN jzs_place AS P ON D.place = P.placeId LEFT JOIN jzs_track AS T ON D.track = T.trackId LEFT JOIN jzs_region AS R ON D.region = R.regionId LEFT JOIN jzs_faultregister AS F ON D.place = F.place AND F.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.deleteFlag = 0 AND D.cancelState = 1 AND D.deviceState != 3 ORDER BY pinTime DESC ) as a group by deviceId) AS b where pinTime < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
+        String sql = "select deviceId from (select * from (SELECT deviceId,faultDay FROM jzs_devicemanagement AS D LEFT JOIN jzs_place AS P ON D.place = P.placeId LEFT JOIN jzs_track AS T ON D.track = T.trackId LEFT JOIN jzs_region AS R ON D.region = R.regionId LEFT JOIN jzs_faultregister AS F ON F.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.deleteFlag = 0 AND D.cancelState = 1 AND D.deviceState != 3 ORDER BY faultDay ASC ) as a group by deviceId) AS b where faultDay < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
+        return jdbcTemplate.query(sql,new SelectWarningDeviceIdRowMapper());
+    }
+
+    @Override
+    public List<Device> selectWarningDeviceIdTwo() {
+        String sql = "SELECT D.deviceId FROM jzs_devicemanagement AS D LEFT JOIN jzs_faultregister AS F ON D.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.cancelState = 1 AND D.deleteFlag = 0 AND D.deviceState != 3 AND F.track IS NULL AND F.region IS NULL AND F.seat IS NULL AND D.deviceTime < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
         return jdbcTemplate.query(sql,new SelectWarningDeviceIdRowMapper());
     }
 
@@ -210,7 +216,7 @@ public class DeviceRepository implements DeviceRepositoryI{
         Object[] args = {
                 deviceId
         };
-        return jdbcTemplate.update(sql,args) > 0 ? true:false;
+        return jdbcTemplate.update(sql,args) >= 0 ? true:false;
     }
 
     @Override
@@ -221,36 +227,6 @@ public class DeviceRepository implements DeviceRepositoryI{
     }
 
     private class Query4PageRowMapper implements RowMapper<Device> {
-
-        @Override
-        public Device mapRow(ResultSet resultSet, int i) throws SQLException {
-            Device device = new Device();
-            device.setDeviceId(resultSet.getInt("deviceId"));
-            device.setDeviceState(resultSet.getInt("deviceState"));
-            device.setDeviceNumber(resultSet.getString("deviceNumber"));
-            device.setDeviceFactory(resultSet.getString("deviceFactory"));
-            device.setDeviceModel(resultSet.getString("deviceModel"));
-            device.setDeviceTimeDate(resultSet.getDate("deviceTime"));
-            device.setPlace(resultSet.getString("placeName"));
-            device.setTrack(resultSet.getString("trackName"));
-            device.setRegion(resultSet.getString("regionName"));
-            device.setSeat(resultSet.getString("seat"));
-            device.setStationNum(resultSet.getString("stationNum"));
-            device.setStationName(resultSet.getString("stationName"));
-            device.setCancelTimeDate(resultSet.getDate("cancelTime"));
-            device.setRollingTimes(resultSet.getString("rollingTimes"));
-            device.setCancelStateNum(resultSet.getInt("cancelState"));
-            device.setRemark(resultSet.getString("remark"));
-            device.setPlaceNum(resultSet.getInt("placeId"));
-            device.setTrackNum(resultSet.getInt("trackId"));
-            device.setRegionNum(resultSet.getInt("regionId"));
-            device.setLatestTime(resultSet.getString("pinTime"));
-
-            return device;
-        }
-    }
-
-    private class SelectRowMapper implements RowMapper<Device> {
 
         @Override
         public Device mapRow(ResultSet resultSet, int i) throws SQLException {
