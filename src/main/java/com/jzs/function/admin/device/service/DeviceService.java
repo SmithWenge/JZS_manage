@@ -12,6 +12,7 @@ import com.jzs.function.support.log.LogContent;
 import com.jzs.function.support.log.repository.LogRepositoryI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,8 +76,21 @@ public class DeviceService implements DeviceServiceI{
 
     @Override
     public Page<Device> list(Device device, Pageable pageable) {
+        Page<Device> page = repository.query4Page(device, pageable);
+        List<Device> list = page.getContent();
+        List<Device> listNew = repository.selectLatestTimes();
+        for (Device device1 : list) {
+            for (Device device2 : listNew) {
+                if (device1.getDeviceId() == device2.getDeviceId()) {
+                    device1.setLatestTime(device2.getLatestTime());
+                } else {
+                    device1.setLatestTime("无最新维修记录");
+                }
+            }
+        }
 
-        return repository.query4Page(device,pageable);
+        Page<Device> pageNew = new PageImpl<Device>(list, pageable, list.size());
+        return pageNew;
     }
 
     @Override

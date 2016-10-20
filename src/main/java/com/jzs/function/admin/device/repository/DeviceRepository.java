@@ -189,14 +189,26 @@ public class DeviceRepository implements DeviceRepositoryI{
 
     @Override
     public List<Device> selectWarningDeviceId() {
-        String sql = "select deviceId from (select * from (SELECT deviceId,faultDay FROM jzs_devicemanagement AS D LEFT JOIN jzs_place AS P ON D.place = P.placeId LEFT JOIN jzs_track AS T ON D.track = T.trackId LEFT JOIN jzs_region AS R ON D.region = R.regionId LEFT JOIN jzs_faultregister AS F ON F.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.deleteFlag = 0 AND D.cancelState = 1 AND D.deviceState != 3 ORDER BY faultDay ASC ) as a group by deviceId) AS b where faultDay < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
-        return jdbcTemplate.query(sql,new SelectWarningDeviceIdRowMapper());
+        String sql = "select deviceId from (select * from (SELECT deviceId,faultDay FROM jzs_devicemanagement AS D LEFT JOIN jzs_faultregister AS F ON F.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.deleteFlag = 0 AND D.cancelState = 1 AND D.deviceState != 3 ORDER BY faultDay ASC ) as a group by deviceId) AS b where faultDay < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
+
+        try {
+            return jdbcTemplate.query(sql,new SelectWarningDeviceIdRowMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public List<Device> selectWarningDeviceIdTwo() {
         String sql = "SELECT D.deviceId FROM jzs_devicemanagement AS D LEFT JOIN jzs_faultregister AS F ON D.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.cancelState = 1 AND D.deleteFlag = 0 AND D.deviceState != 3 AND F.track IS NULL AND F.region IS NULL AND F.seat IS NULL AND D.deviceTime < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
-        return jdbcTemplate.query(sql,new SelectWarningDeviceIdRowMapper());
+
+        try {
+            return jdbcTemplate.query(sql,new SelectWarningDeviceIdRowMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private class SelectWarningDeviceIdRowMapper implements  RowMapper<Device> {
@@ -224,6 +236,30 @@ public class DeviceRepository implements DeviceRepositoryI{
         String sql = "SELECT count(1) FROM jzs_devicemanagement WHERE deviceState = 2 AND cancelState = 1 AND deleteFlag = 0";
 
         return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
+
+    @Override
+    public List<Device> selectLatestTimes() {
+        String sql = "select deviceId,registerTime from (select * from (SELECT deviceId,faultDay,F.registerTime FROM jzs_faultregister AS F LEFT JOIN jzs_devicemanagement AS D ON F.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.deleteFlag = 0 AND D.cancelState = 1 ORDER BY faultDay ASC ) as a group by deviceId) AS b ";
+
+        try {
+            return jdbcTemplate.query(sql,new SelectLatestTimesRowMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private class SelectLatestTimesRowMapper implements  RowMapper<Device> {
+
+        @Override
+        public Device mapRow(ResultSet resultSet, int i) throws SQLException {
+            Device device = new Device();
+            device.setDeviceId(resultSet.getInt("deviceId"));
+            device.setLatestTime(resultSet.getString("registerTime"));
+
+            return device;
+        }
     }
 
     private class Query4PageRowMapper implements RowMapper<Device> {

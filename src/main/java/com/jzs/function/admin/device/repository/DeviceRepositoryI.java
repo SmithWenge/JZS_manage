@@ -20,4 +20,5 @@ public interface DeviceRepositoryI {
     List<Device> selectWarningDeviceIdTwo();
     Boolean updateWaringDevice(int deviceId);
     int selectNumOfWarning();
+    List<Device> selectLatestTimes();
 }
