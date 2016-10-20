@@ -80,11 +80,10 @@ public class DeviceService implements DeviceServiceI{
         List<Device> list = page.getContent();
         List<Device> listNew = repository.selectLatestTimes();
         for (Device device1 : list) {
+            device1.setLatestTime("无最新维修记录");
             for (Device device2 : listNew) {
                 if (device1.getDeviceId() == device2.getDeviceId()) {
                     device1.setLatestTime(device2.getLatestTime());
-                } else {
-                    device1.setLatestTime("无最新维修记录");
                 }
             }
         }

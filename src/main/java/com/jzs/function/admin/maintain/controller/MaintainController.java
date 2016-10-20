@@ -253,7 +253,7 @@ public class MaintainController {
         maintain.setRegion(device.getRegion());
         maintain.setSeat(device.getSeat());
 
-        if (maintainService.selectExitCanclePro(maintain)) {
+//        if (maintainService.selectExitCanclePro(maintain)) {
             if (maintainService.updateMaintain(maintain, logUser)) {
                 if (LOG.isInfoEnabled())
                     LOG.info("[MANAGE] [OK] {} finish maintain {}.", logUser, maintain.getFaultRegisterId());
@@ -264,11 +264,11 @@ public class MaintainController {
 
             redirectAttributes.addFlashAttribute(ConstantFields.MAINTAIN_FINISH_FAILURE_KEY, ConstantFields.MAINTAIN_FINISH_FAILURE_MESSAGE);
             return "redirect:/admin/maintain/routeMaintainIndex.action";
-        }else {
-
-            redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_REMAIN_KEY, ConstantFields.PROTECT_REMAIN_MESSAGE);
-            return "redirect:/admin/maintain/routeMaintainIndex.action";
-        }
+//        }else {
+//
+//            redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_REMAIN_KEY, ConstantFields.PROTECT_REMAIN_MESSAGE);
+//            return "redirect:/admin/maintain/routeMaintainIndex.action";
+//        }
     }
 
     @RequestMapping(value = "/finishMaintain", method = RequestMethod.POST)
