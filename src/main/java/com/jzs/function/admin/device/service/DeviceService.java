@@ -76,20 +76,7 @@ public class DeviceService implements DeviceServiceI{
 
     @Override
     public Page<Device> list(Device device, Pageable pageable) {
-        Page<Device> page = repository.query4Page(device, pageable);
-        List<Device> list = page.getContent();
-        List<Device> listNew = repository.selectLatestTimes();
-        for (Device device1 : list) {
-            device1.setLatestTime("无最新维修记录");
-            for (Device device2 : listNew) {
-                if (device1.getDeviceId() == device2.getDeviceId()) {
-                    device1.setLatestTime(device2.getLatestTime());
-                }
-            }
-        }
-
-        Page<Device> pageNew = new PageImpl<Device>(list, pageable, list.size());
-        return pageNew;
+        return repository.query4Page(device, pageable);
     }
 
     @Override

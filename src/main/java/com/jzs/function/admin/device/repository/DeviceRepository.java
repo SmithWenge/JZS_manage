@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import com.jzs.arc.utils.DateUtils;
 import com.jzs.function.admin.device.Device;
 import com.jzs.function.support.dictionary.impl.DefaultDictionaryManager;
+import com.jzs.function.support.utils.DeviceRepositoryUtils;
 import com.jzs.function.support.utils.RepositoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class DeviceRepository implements DeviceRepositoryI{
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    private RepositoryUtils repositoryUtils;
+    private DeviceRepositoryUtils deviceRepositoryUtils;
 
     public void insert(Device info) {
         String sql = "INSERT INTO jzs_devicemanagement (deviceState,deviceNumber, deviceFactory, deviceModel, deviceTime, place,track, region, seat, stationNum,stationName, cancelTime,cancelState, rollingTimes,remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
@@ -105,7 +106,7 @@ public class DeviceRepository implements DeviceRepositoryI{
 
         sql.append(" ORDER BY D.deviceNumber ASC ");
         try {
-            return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowMapper());
+            return deviceRepositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowMapper());
         } catch (Exception e) {
             return null;
         }
