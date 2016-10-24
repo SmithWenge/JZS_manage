@@ -43,7 +43,7 @@ public class MaintainService implements MaintainServiceI{
     }
 
     @Override
-    public List<Maintain> selectProtectRequestPeople() {
+    public Maintain selectProtectRequestPeople() {
         return maintainRepository.selectProtectRequestPeople();
     }
 
@@ -63,7 +63,7 @@ public class MaintainService implements MaintainServiceI{
             Boolean tmp2 = maintainRepository.updateTrack(maintain,2);
 
             if (tmp1 && tmp2) {
-                LogContent logContent = new LogContent(logUser, "添加防护" + maintain.getProtectProject(), 1, 3);
+                LogContent logContent = new LogContent(logUser, "添加防护", 1, 3);
                 logRepository.insertLog(logContent);
                 return 0;
             }
@@ -104,7 +104,7 @@ public class MaintainService implements MaintainServiceI{
         Boolean tmp1 = maintainRepository.maintainAdd(maintain);
         Boolean tmp2 = maintainRepository.updateDevice(maintain,3);
         if (tmp1 && tmp2) {
-            LogContent logContent = new LogContent(logUser, "添加故障维护" + maintain.getMaintainProject(), 1, 3);
+            LogContent logContent = new LogContent(logUser, "添加故障维护", 1, 3);
             logRepository.insertLog(logContent);
         }
 
@@ -177,13 +177,12 @@ public class MaintainService implements MaintainServiceI{
     public Boolean inspectionStop(Maintain maintain,String logUser) throws BatchRollbackException{
         List<Maintain> list = maintainRepository.selectStopInspTracks(maintain.getPlace());
         Maintain stopMaintain = new Maintain();
-        stopMaintain.setProtectProject("巡检防护");
         stopMaintain.setProtectState(2);
         Maintain inspection = maintainRepository.selectInspectionById(maintain.getInspectionId());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        stopMaintain.setInspectionStopTime(sdf.format(new Date()));
+        stopMaintain.setProtectStopTime(sdf.format(new Date()));
         maintain.setInspectionStopTime(sdf.format(new Date()));
-        stopMaintain.setProtectPeople("未记录");
+        stopMaintain.setProtectPeople("巡检防护未记录");
         stopMaintain.setProtectRemark("无");
         stopMaintain.setProtectApproveTime(inspection.getInspectionTime());
         stopMaintain.setProtectApprovePeople(inspection.getProtectApprovePeople());
@@ -193,7 +192,7 @@ public class MaintainService implements MaintainServiceI{
         for (Maintain forMaintain : list) {
             stopMaintain.setTrack(forMaintain.getTrack());
             maintainRepository.inspectionAddPro(stopMaintain);
-            LogContent logContent = new LogContent(logUser, "添加防护" + stopMaintain.getProtectProject() + " " + forMaintain.getTrackName(), 1, 3);
+            LogContent logContent = new LogContent(logUser, "添加防护" + "巡检防护" + " " + forMaintain.getTrackName(), 1, 3);
             logRepository.insertLog(logContent);
         }
 
@@ -299,6 +298,16 @@ public class MaintainService implements MaintainServiceI{
     @Override
     public int selectPlaceId(int trackId) {
         return maintainRepository.selectPlaceId(trackId);
+    }
+
+    @Override
+    public Boolean isExitInspection() {
+        return maintainRepository.isExitInspection();
+    }
+
+    @Override
+    public Maintain selectJsonByFauId(int id) {
+        return maintainRepository.selectMaintainById(id);
     }
 
 }

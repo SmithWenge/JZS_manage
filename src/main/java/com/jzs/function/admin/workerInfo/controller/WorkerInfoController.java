@@ -76,7 +76,7 @@ public class WorkerInfoController {
                     deviceService.updateWarning();
 
                     redirectAttributes.addFlashAttribute(ConstantFields.ADD_SUCCESS_KEY, ConstantFields.ADD_SUCCESS_MESSAGE);
-                    ModelAndView mav = new ModelAndView("redirect:/admin/workerInfo/routeList.action");
+                    ModelAndView mav = new ModelAndView("redirect:/admin/home/index.action");
 
                     return mav;
                 }

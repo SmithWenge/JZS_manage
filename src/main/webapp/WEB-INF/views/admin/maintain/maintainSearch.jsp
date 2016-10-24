@@ -66,7 +66,6 @@
                 <table class="table" id="paginationTable" align="center">
                     <tr style="background-color: #3767b1; color: #dbdbdb;">
                         <th>序号</th>
-                        <th>防护项目</th>
                         <th>场</th>
                         <th>股道</th>
                         <th>区</th>
@@ -79,7 +78,6 @@
                     <c:forEach items="${page.content}" var="maintain" varStatus="status">
                         <tr>
                             <td>${status.index + 1}</td>
-                            <td>${maintain.maintainProject}</td>
                             <td>${maintain.placeName}</td>
                             <td>${maintain.trackName}</td>
                             <td>${maintain.regionName}</td>
@@ -108,7 +106,7 @@
                     <ul class="pager">
                         <c:if test="${page.number > 0 }">
                             <li class="previous">
-                                <a href="${contextPath}/admin/maintain/maintainPage/page.action?page=${page.number - 1}"><span aria-hidden="true">&larr;</span> 上一页</a>
+                                <a href="${contextPath}/admin/maintain/maintainPage.action?page=${page.number - 1}"><span aria-hidden="true">&larr;</span> 上一页</a>
                             </li>
                         </c:if>
                         <c:if test="${page.number <= 0 }">

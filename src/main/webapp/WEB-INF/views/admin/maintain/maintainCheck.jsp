@@ -9,14 +9,6 @@
         <form class="form-horizontal" id="addForm">
           <div class="col-md-6 form-group">
             <div class="form-group">
-              <label for="maintainProject" class="col-sm-2 control-label">维护项目:</label>
-              <div class="col-sm-10">
-                <td id="maintainProject" class="form-control">${maintain.maintainProject}</td>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 form-group">
-            <div class="form-group">
               <label for="placeName" class="col-sm-2 control-label">场:</label>
               <div class="col-sm-10">
                 <td id="placeName" class="form-control">${maintain.placeName}</td>

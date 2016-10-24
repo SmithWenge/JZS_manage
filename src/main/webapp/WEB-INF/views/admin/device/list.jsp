@@ -52,7 +52,12 @@
                             <select class="form-control" id="placeNum" name="placeNum">
                                 <option value="0">全部</option>
                                 <c:forEach items="${sessionScope.places}" var="place">
-                                    <option value="${place.placeId}">${place.placeName}</option>
+                                    <c:if test="${place.placeId == sessionScope.deviceSearch.placeNum}">
+                                        <option value="${place.placeId}" selected>${place.placeName}</option>
+                                    </c:if>
+                                    <c:if test="${place.placeId != sessionScope.deviceSearch.placeNum}">
+                                        <option value="${place.placeId}">${place.placeName}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>
@@ -61,7 +66,12 @@
                             <select class="form-control" id="trackNum" name="trackNum">
                                 <option value="0">全部</option>
                                 <c:forEach items="${sessionScope.tracks}" var="track">
-                                    <option value="${track.trackId}">${track.trackName}</option>
+                                    <c:if test="${track.trackId == sessionScope.deviceSearch.trackNum}">
+                                        <option value="${track.trackId}" selected>${track.trackName}</option>
+                                    </c:if>
+                                    <c:if test="${track.trackId != sessionScope.deviceSearch.trackNum}">
+                                        <option value="${track.trackId}">${track.trackName}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>
@@ -70,31 +80,30 @@
                             <select class="form-control" id="regionNum" name="regionNum">
                                 <option value="0">全部</option>
                                 <c:forEach items="${sessionScope.regions}" var="region">
-                                    <option value="${region.regionId}">${region.regionName}</option>
+                                    <c:if test="${region.regionId == sessionScope.deviceSearch.regionNum}">
+                                        <option value="${region.regionId}" selected>${region.regionName}</option>
+                                    </c:if>
+                                    <c:if test="${region.regionId != sessionScope.deviceSearch.regionNum}">
+                                        <option value="${region.regionId}">${region.regionName}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="cancelStateNum">撤销状态</label>
-                            <tags:dicselect name="cancelStateNum" key="cancelState" value="0" id="cancelStateNum" />
+                            <tags:dicselect name="cancelStateNum" key="cancelState" value="${sessionScope.deviceSearch.cancelStateNum}" id="cancelStateNum" />
                         </div>
                         <div class="form-group">
                             <label for="deviceState">减速顶状态</label>
-                            <select class="form-control" id="deviceState" name="deviceState">
-                                <option value="0">全部</option>
-                                <option value="1">正常</option>
-                                <option value="2">预警</option>
-                                <option value="3">故障</option>
-                                <option value="4">其他</option>
-                            </select>
+                            <tags:dicselect name="deviceState" key="searchDeviceState" value="${sessionScope.deviceSearch.deviceState}" id="deviceState" />
                         </div>
                         <div class="form-group">
                             <label for="startDate" class="control-label">安装时间</label>
-                            <input type="date" class="form-control" id="startDate" name="startDate" style="width:120px">
+                            <input type="date" class="form-control" id="startDate" name="startDate" style="width:120px" value="${sessionScope.deviceSearch.startDate}">
                         </div>
                         <div class="form-group">
                             <label for="stopDate" class="control-label">至</label>
-                            <input type="date" class="form-control" id="stopDate" name="stopDate" style="width:120px">
+                            <input type="date" class="form-control" id="stopDate" name="stopDate" style="width:120px" value="${sessionScope.deviceSearch.stopDate}">
                         </div>
                         <button type="submit" class="btn btn-default">检索</button>
                     </form>

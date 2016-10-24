@@ -175,20 +175,16 @@
           <div class="form-group">
             <label for="zhibanPeo" class="col-sm-3 control-label">驼峰值班员</label>
             <div class="col-sm-9">
-              <select class="form-control" id="zhibanPeo" name="zhibanPeo">
-                <c:forEach items="${protectRequestPeoples}" var="protectRequestPeople">
-                  <option value="${protectRequestPeople.userName}">${protectRequestPeople.userName}</option>
-                </c:forEach>
-              </select>
+              <input type="text" class="form-control" id="zhibanPeo" name="zhibanPeo" value="${protectRequestPeople.userName}">
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
+            <div class="col-sm-offset-3 col-sm-2">
               <button type="submit" class="btn btn-default">提交</button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <div class="col-sm-offset-1 col-sm-6">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
           </div>
         </form>
       </div>
@@ -205,12 +201,6 @@
       </div>
       <div class="modal-body">
         <form class="form-horizontal" action="${contextPath}/admin/maintain/protectAdd.action" method="post" id="portectFrom">
-          <div class="form-group">
-            <label for="protectProject" class="col-sm-2 control-label">作业项目</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="protectProject" name="protectProject" >
-            </div>
-          </div>
           <input type="hidden" name="track" id="proRegTrackId">
           <input type="hidden" name="place" id="proRegPlaceId">
           <div class="form-group">
@@ -244,11 +234,7 @@
           <div class="form-group">
             <label for="protectRequestPeople" class="col-sm-2 control-label">请求人</label>
             <div class="col-sm-10">
-              <select class="form-control" id="protectRequestPeople" name="protectRequestPeople">
-                <c:forEach items="${protectRequestPeoples}" var="protectRequestPeople">
-                  <option value="${protectRequestPeople.userName}">${protectRequestPeople.userName}</option>
-                </c:forEach>
-              </select>
+              <input type="text" class="form-control" id="protectRequestPeople" name="protectRequestPeople" value="${protectRequestPeople.userName}">
             </div>
           </div>
           <div class="form-group">
@@ -258,12 +244,12 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-offset-3 col-sm-2">
               <button type="submit" class="btn btn-default">提交</button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <div class="col-sm-offset-1 col-sm-6">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
           </div>
         </form>
       </div>
@@ -280,12 +266,6 @@
       </div>
       <div class="modal-body">
         <form class="form-horizontal" action="${contextPath}/admin/maintain/maintainAdd.action" method="post" id="faultForm">
-          <div class="form-group">
-            <label for="maintainProject" class="col-sm-2 control-label">作业项目</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="maintainProject" name="maintainProject" >
-            </div>
-          </div>
           <div class="form-group">
             <label for="fauRegPlaceName" class="col-sm-2 control-label">场</label>
             <div class="col-sm-10">
@@ -340,32 +320,18 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="faultRegisterPeople" class="col-sm-2 control-label">登记人</label>
+            <label for="faultRegisterPeople" class="col-sm-2 control-label">记录人</label>
             <div class="col-sm-10">
-              <select class="form-control" id="faultRegisterPeople" name="faultRegisterPeople">
-                <c:forEach items="${protectRequestPeoples}" var="protectRequestPeople">
-                  <option value="${protectRequestPeople.userName}">${protectRequestPeople.userName}</option>
-                </c:forEach>
-              </select>
+              <input type="text" class="form-control" id="faultRegisterPeople" name="faultRegisterPeople" value="${protectRequestPeople.userName}">
             </div>
           </div>
           <div class="form-group">
-            <label for="faultDealPeople" class="col-sm-2 control-label">处理人</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="faultDealPeople" name="faultDealPeople">
-                <c:forEach items="${workers}" var="worker">
-                  <option value="${worker.userName}">${worker.userName}</option>
-                </c:forEach>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-offset-3 col-sm-2">
               <button type="submit" class="btn btn-default">提交</button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <div class="col-sm-offset-1 col-sm-6">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
           </div>
         </form>
       </div>
@@ -389,9 +355,19 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="dealResult" class="col-sm-3 control-label">故障原因</label>
+            <label for="faultRegisterPeopleTwo" class="col-sm-3 control-label">记录人</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="dealResult" name="dealResult">
+              <input type="text" class="form-control" id="faultRegisterPeopleTwo" name="faultRegisterPeople" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="faultDealPeople" class="col-sm-3 control-label">处理人</label>
+            <div class="col-sm-9">
+              <select class="form-control" id="faultDealPeople" name="faultDealPeople">
+                <c:forEach items="${workers}" var="worker">
+                  <option value="${worker.userName}">${worker.userName}</option>
+                </c:forEach>
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -401,12 +377,12 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
+            <div class="col-sm-offset-3 col-sm-2">
               <button type="submit" class="btn btn-default">提交</button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <div class="col-sm-offset-1 col-sm-6">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
           </div>
         </form>
       </div>
@@ -465,9 +441,37 @@
           $.each(result.list, function (i, item) {
             faultRegister.options.add(new Option(item.maintainName, item.faultRegisterId));
           });
+
+          var listTwo = result.list;
+          var faultRegisterId = listTwo[0].faultRegisterId;
+          console.log(faultRegisterId);
+          $.ajax({
+            type: 'post',
+            contentType: 'application/json',
+            dataType: 'json',
+            url: '${contextPath}/admin/maintain/selectJsonByFauId/' + faultRegisterId + '.action',
+            success: function (result) {
+              var RegisterPeople = result.jsonByFauId;
+              document.getElementById("faultRegisterPeopleTwo").value=RegisterPeople.faultRegisterPeople;
+            }
+          });
         }
       });
     });
+
+    $("#faultRegister").on('change',function() {
+      var $value = $("#faultRegister").val();
+      $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        dataType: 'json',
+        url: '${contextPath}/admin/maintain/selectJsonByFauId/' + $value + '.action',
+        success: function (result) {
+          var RegisterPeople = result.jsonByFauId;
+          document.getElementById("faultRegisterPeopleTwo").value=RegisterPeople.faultRegisterPeople;
+        }
+      });
+    })
   });
 </script>
 

@@ -12,7 +12,7 @@ public interface MaintainServiceI {
 
    Maintain selectProtectApprovePeople();
    List<Maintain> selectProtectPeople();
-   List<Maintain> selectProtectRequestPeople();
+   Maintain selectProtectRequestPeople();
    List<Maintain> selectWorker();
    int protectAdd(Maintain maintain,String logUser)throws BatchRollbackException;
    Page<Maintain> listProtect(Maintain maintain,Pageable pageable);
@@ -40,4 +40,7 @@ public interface MaintainServiceI {
    List<Maintain> selectTrackMaintains(int track);
    Maintain selectSeat(int faultRegisterId);
    int selectPlaceId(int trackId);
+
+   Boolean isExitInspection();
+   Maintain selectJsonByFauId(int id);
 }

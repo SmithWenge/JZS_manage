@@ -6,6 +6,20 @@
     <div class="panel-heading" style="height: 45px;padding-top: 5px;">
         <ul class="nav nav-pills">
             <li role="presentation" ><a href="${contextPath}/admin/home/index.action"><span class="glyphicon glyphicon-map-marker"></span>首页</a></li>
+            <c:forEach items="${sessionScope.functions}" var="function">
+                <c:if test="${function.functionId == 39}">
+                    <c:if test="${state == 0}">
+                        <a style="text-decoration: none;margin: 60px" id="insStarButton">
+                            <button type="button" class="btn btn-warning" name="insStarButton" data-toggle="modal" data-target="#insStarFrom">开始巡检</button>
+                        </a>
+                    </c:if>
+                    <c:if test="${state != 0}">
+                        <a href="${contextPath}/admin/maintain/inspectionStop.action" style="text-decoration: none;margin: 60px">
+                            <button type="button" class="btn btn-danger">结束巡检</button>
+                        </a>
+                    </c:if>
+                </c:if>
+            </c:forEach>
         </ul>
     </div>
 

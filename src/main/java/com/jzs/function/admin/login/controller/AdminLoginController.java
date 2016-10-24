@@ -7,6 +7,7 @@ import com.jzs.function.admin.authority.Authority;
 import com.jzs.function.admin.authority.service.AuthorityServiceI;
 import com.jzs.function.admin.login.AdminUser;
 import com.jzs.function.admin.login.service.AdminLoginServiceI;
+import com.jzs.function.admin.maintain.service.MaintainServiceI;
 import com.jzs.function.admin.role.Role;
 import com.jzs.function.admin.role.service.RoleServiceI;
 import com.jzs.function.admin.seat.service.SeatServiceI;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -40,6 +42,8 @@ public class AdminLoginController {
     private WorkerInfoServiceI workerInfoService;
     @Autowired
     private SeatServiceI seatService;
+    @Autowired
+    private MaintainServiceI maintainService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(AdminUser adminUser, HttpSession session) {
@@ -112,10 +116,16 @@ public class AdminLoginController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
-        workerInfoService.temDelete();
+    public String logout(HttpSession session,RedirectAttributes redirectAttributes) {
+//        if (maintainService.isExitInspection()) {
+//            redirectAttributes.addFlashAttribute(ConstantFields.EXIT_INSPECTION_KEY, ConstantFields.EXIT_INSPECTION_MESSAGE);
+//
+//            return "redirect:/admin/home/index.action";
+//        } else {
+            workerInfoService.temDelete();
+            session.removeAttribute(ConstantFields.SESSION_ADMIN_KEY);
 
-        session.removeAttribute(ConstantFields.SESSION_ADMIN_KEY);
-        return "redirect:/admin/routeLogin.action";
+            return "redirect:/admin/routeLogin.action";
+//        }
     }
 }

@@ -10,7 +10,6 @@ public class Maintain extends Entry{
 
     private int protectIdNum;
     private String protectId;
-    private String protectProject;
     private String protectStopTime;
     private String protectApproveTime;
     private String newDate;
@@ -56,7 +55,6 @@ public class Maintain extends Entry{
     private int inspectionState;
     private int inspectionId;
     private String placeAndTrack;
-    private String maintainProject;
     private int faultReason;
     private String dealResult;
     private String maintainName;
@@ -99,14 +97,6 @@ public class Maintain extends Entry{
 
     public void setDealResult(String dealResult) {
         this.dealResult = dealResult;
-    }
-
-    public String getMaintainProject() {
-        return maintainProject;
-    }
-
-    public void setMaintainProject(String maintainProject) {
-        this.maintainProject = maintainProject;
     }
 
     public String getFaultFindPeopleText() {
@@ -372,14 +362,6 @@ public class Maintain extends Entry{
 
     public void setProtectId(String protectId) {
         this.protectId = protectId;
-    }
-
-    public String getProtectProject() {
-        return protectProject;
-    }
-
-    public void setProtectProject(String protectProject) {
-        this.protectProject = protectProject;
     }
 
     public String getProtectApprovePeople() {

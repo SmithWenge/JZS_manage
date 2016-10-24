@@ -36,7 +36,7 @@
         });
 
         $('#logout').on('click', function () {
-            var statu = confirm('您确认退出吗?退出后上岗人员记录将要重新记录');
+            var statu = confirm('您确认退出吗?退出后上岗人员记录将要重新记录并且请确保巡检已经结束');
             if(!statu){
                 return false;
             }

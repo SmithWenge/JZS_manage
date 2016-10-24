@@ -46,11 +46,11 @@ public class MaintainRepository implements MaintainRepositoryI{
     }
 
     @Override
-    public List<Maintain> selectProtectRequestPeople() {
+    public Maintain selectProtectRequestPeople() {
         String sql = "SELECT userName FROM jzs_temattendance AS A LEFT JOIN jzs_user AS U ON A.userId = U.userId WHERE A.deleteFlag = 0 AND userPost = 2";
 
         try {
-            return jdbcTemplate.query(sql, new SelectPeopleRowMapper());
+            return (Maintain)jdbcTemplate.queryForObject(sql, new SelectPeopleRowMapper());
         } catch (Exception e) {
             return null;
         }
@@ -69,9 +69,8 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Boolean protectAdd(Maintain maintain) {
-        String sql = "INSERT INTO jzs_protectregister (protectProject,protectApproveTime,protectDay,protectApprovePeople,protectPeople,protectRequestPeople,track,place,protectRemark) VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO jzs_protectregister (protectApproveTime,protectDay,protectApprovePeople,protectPeople,protectRequestPeople,track,place,protectRemark) VALUES (?,?,?,?,?,?,?,?)";
         Object[] args = {
-                maintain.getProtectProject(),
                 maintain.getProtectApproveTime(),
                 maintain.getProtectDay(),
                 maintain.getProtectApprovePeople(),
@@ -87,7 +86,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Page<Maintain> list(Maintain maintain, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT protectId,protectProject,protectState,placeName,trackName,protectApprovePeople,protectPeople,protectRequestPeople,protectApproveTime,protectStopTime,protectRemark FROM jzs_protectregister AS P LEFT JOIN jzs_place AS L ON P.place = L.placeId LEFT JOIN jzs_track AS T ON P.track = T.trackId WHERE P.deleteFlag = 0 AND L.deleteFlag = 0 AND T.deleteFlag = 0");
+        StringBuilder sql = new StringBuilder("SELECT protectId,protectState,placeName,trackName,protectApprovePeople,protectPeople,protectRequestPeople,protectApproveTime,protectStopTime,protectRemark FROM jzs_protectregister AS P LEFT JOIN jzs_place AS L ON P.place = L.placeId LEFT JOIN jzs_track AS T ON P.track = T.trackId WHERE P.deleteFlag = 0 AND L.deleteFlag = 0 AND T.deleteFlag = 0");
         List<Object> list = new ArrayList<Object>();
         Optional<Maintain> optional = Optional.fromNullable(maintain);
         if (optional.isPresent()) {
@@ -155,9 +154,8 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Boolean maintainAdd(Maintain maintain) {
-        String sql = "INSERT INTO jzs_faultregister (maintainProject,faultState,place,track,region,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,faultType,faultDay) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO jzs_faultregister (faultState,place,track,region,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,faultType,faultDay) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         Object[] args = {
-                maintain.getMaintainProject(),
                 maintain.getFaultState(),
                 maintain.getPlace(),
                 maintain.getTrack(),
@@ -187,7 +185,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Maintain selectPartMaintain(Maintain maintain) {
-        String sql = "SELECT protectProject,place,track,protectRequestPeople FROM jzs_protectregister WHERE protectId = ? AND deleteFlag = 0";
+        String sql = "SELECT place,track,protectRequestPeople FROM jzs_protectregister WHERE protectId = ? AND deleteFlag = 0";
         Object[] args = {
                 maintain.getProtectIdNum()
         };
@@ -201,7 +199,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Page<Maintain> listMaintain(Maintain maintain, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT faultRegisterId,F.track,maintainProject,faultState,faultType,P.placeName,T.trackName,R.regionName,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,pinTime,faultReason,dealResult FROM jzs_faultregister AS F LEFT JOIN jzs_track AS T ON F.track = T.trackId LEFT JOIN jzs_region AS R ON F.region = R.regionId LEFT JOIN jzs_place AS P ON F.place = P.placeId WHERE F.deleteFlag = 0");
+        StringBuilder sql = new StringBuilder("SELECT faultRegisterId,F.track,faultState,faultType,P.placeName,T.trackName,R.regionName,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,pinTime,faultReason,dealResult FROM jzs_faultregister AS F LEFT JOIN jzs_track AS T ON F.track = T.trackId LEFT JOIN jzs_region AS R ON F.region = R.regionId LEFT JOIN jzs_place AS P ON F.place = P.placeId WHERE F.deleteFlag = 0");
         List<Object> list = new ArrayList<Object>();
         Optional<Maintain> optional = Optional.fromNullable(maintain);
         if (optional.isPresent()) {
@@ -266,7 +264,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Page<Maintain> listAll(Maintain maintain, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT F.faultRegisterId,F.protectProject,F.place,F.track,region,seat,protectState,faultState,faultType,protectDay,faultDay FROM jzs_faultregister AS F LEFT JOIN jzs_protectregister AS P ON F.protectId = P.protectId WHERE F.deleteFlag = 0");
+        StringBuilder sql = new StringBuilder("SELECT F.faultRegisterId,F.place,F.track,region,seat,protectState,faultState,faultType,protectDay,faultDay FROM jzs_faultregister AS F LEFT JOIN jzs_protectregister AS P ON F.protectId = P.protectId WHERE F.deleteFlag = 0");
         List<Object> list = new ArrayList<Object>();
         Optional<Maintain> optional = Optional.fromNullable(maintain);
         if (optional.isPresent()) {
@@ -320,7 +318,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Maintain selectAll(int faultRegisterId) {
-        String sql = "SELECT F.protectProject,F.place,F.track,region,seat,protectState,faultState,faultType,protectApprovePeople,protectPeople,protectRequestPeople,faultFindPeople,faultDealPeople,protectDay,faultDay,protectApproveTime,registerTime,protectStopTime,pinTime,protectRemark FROM jzs_faultregister AS F LEFT JOIN jzs_protectregister AS P ON F.protectId = P.protectId WHERE F.deleteFlag = 0 AND F.faultRegisterId = ?";
+        String sql = "SELECT F.place,F.track,region,seat,protectState,faultState,faultType,protectApprovePeople,protectPeople,protectRequestPeople,faultFindPeople,faultDealPeople,protectDay,faultDay,protectApproveTime,registerTime,protectStopTime,pinTime,protectRemark FROM jzs_faultregister AS F LEFT JOIN jzs_protectregister AS P ON F.protectId = P.protectId WHERE F.deleteFlag = 0 AND F.faultRegisterId = ?";
         Object[] args = {
                 faultRegisterId
         };
@@ -494,10 +492,9 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Boolean inspectionAddPro(Maintain maintain) {
-        String sql = "INSERT INTO jzs_protectregister (protectState,protectProject,protectApproveTime,protectStopTime,protectDay,protectApprovePeople,protectPeople,protectRequestPeople,track,place,protectRemark) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO jzs_protectregister (protectState,protectApproveTime,protectStopTime,protectDay,protectApprovePeople,protectPeople,protectRequestPeople,track,place,protectRemark) VALUES (?,?,?,?,?,?,?,?,?,?)";
         Object[] args = {
                 maintain.getProtectState(),
-                maintain.getProtectProject(),
                 maintain.getProtectApproveTime(),
                 maintain.getProtectStopTime(),
                 maintain.getNewDate(),
@@ -546,7 +543,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public List<Maintain> listForMaintain() {
-        String sql = "SELECT faultRegisterId,F.track,maintainProject,faultState,faultType,P.placeName,T.trackName,R.regionName,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,pinTime,faultReason,dealResult FROM jzs_faultregister AS F LEFT JOIN jzs_track AS T ON F.track = T.trackId LEFT JOIN jzs_region AS R ON F.region = R.regionId LEFT JOIN jzs_place AS P ON F.place = P.placeId WHERE F.deleteFlag = 0 AND F.faultState = 2 ORDER BY registerTime DESC";
+        String sql = "SELECT faultRegisterId,F.track,faultState,faultType,P.placeName,T.trackName,R.regionName,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,pinTime,faultReason,dealResult FROM jzs_faultregister AS F LEFT JOIN jzs_track AS T ON F.track = T.trackId LEFT JOIN jzs_region AS R ON F.region = R.regionId LEFT JOIN jzs_place AS P ON F.place = P.placeId WHERE F.deleteFlag = 0 AND F.faultState = 2 ORDER BY registerTime DESC";
 
         try {
             return jdbcTemplate.query(sql, new ListMaintainRowMapper());
@@ -567,7 +564,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Maintain selectMaintainById(int faultRegisterId) {
-        String sql = "SELECT faultRegisterId,F.track,maintainProject,faultState,faultType,P.placeName,T.trackName,R.regionName,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,pinTime,faultReason,dealResult FROM jzs_faultregister AS F LEFT JOIN jzs_track AS T ON F.track = T.trackId LEFT JOIN jzs_region AS R ON F.region = R.regionId LEFT JOIN jzs_place AS P ON F.place = P.placeId WHERE F.deleteFlag = 0 AND F.faultState = 2 AND faultRegisterId = ?";
+        String sql = "SELECT faultRegisterId,F.track,faultState,faultType,P.placeName,T.trackName,R.regionName,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,pinTime,faultReason,dealResult FROM jzs_faultregister AS F LEFT JOIN jzs_track AS T ON F.track = T.trackId LEFT JOIN jzs_region AS R ON F.region = R.regionId LEFT JOIN jzs_place AS P ON F.place = P.placeId WHERE F.deleteFlag = 0 AND F.faultState = 2 AND faultRegisterId = ?";
         Object[] args = {
                 faultRegisterId
         };
@@ -660,6 +657,13 @@ public class MaintainRepository implements MaintainRepositoryI{
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public Boolean isExitInspection() {
+        String sql = "SELECT COUNT(0) FROM jzs_place WHERE placeState = 2 AND deleteFlag = 0";
+
+        return jdbcTemplate.queryForObject(sql, Integer.class) > 0 ? true:false;
     }
 
     private class SelectSeatRowMapper implements RowMapper<Maintain> {
@@ -766,7 +770,6 @@ public class MaintainRepository implements MaintainRepositoryI{
         @Override
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Maintain maintain = new Maintain();
-            maintain.setProtectProject(resultSet.getString("protectProject"));
             maintain.setPlace(resultSet.getInt("place"));
             maintain.setTrack(resultSet.getInt("track"));
             maintain.setRegion(resultSet.getInt("region"));
@@ -792,12 +795,11 @@ public class MaintainRepository implements MaintainRepositoryI{
     }
 
     private class ListAllRowMapper implements RowMapper {
-        //F.protectProject,F.place,F.track,region,seat,protectState,faultState,faultType,protectDay,faultDay
+        //F.place,F.track,region,seat,protectState,faultState,faultType,protectDay,faultDay
         @Override
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Maintain maintain = new Maintain();
             maintain.setFaultRegisterId(resultSet.getInt("faultRegisterId"));
-            maintain.setProtectProject(resultSet.getString("protectProject"));
             maintain.setPlace(resultSet.getInt("place"));
             maintain.setTrack(resultSet.getInt("track"));
             maintain.setRegion(resultSet.getInt("region"));
@@ -819,7 +821,6 @@ public class MaintainRepository implements MaintainRepositoryI{
             Maintain maintain = new Maintain();
             maintain.setFaultRegisterId(resultSet.getInt("faultRegisterId"));
             maintain.setTrack(resultSet.getInt("track"));
-            maintain.setMaintainProject(resultSet.getString("maintainProject"));
             maintain.setFaultType(resultSet.getInt("faultType"));
             maintain.setPlaceName(resultSet.getString("placeName"));
             maintain.setTrackName(resultSet.getString("trackName"));
@@ -843,7 +844,6 @@ public class MaintainRepository implements MaintainRepositoryI{
         @Override
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Maintain maintain = new Maintain();
-            maintain.setProtectProject(resultSet.getString("protectProject"));
             maintain.setPlace(resultSet.getInt("place"));
             maintain.setTrack(resultSet.getInt("track"));
             maintain.setProtectRequestPeople(resultSet.getString("protectRequestPeople"));
@@ -868,7 +868,6 @@ public class MaintainRepository implements MaintainRepositoryI{
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Maintain maintain = new Maintain();
             maintain.setProtectIdNum(resultSet.getInt("protectId"));
-            maintain.setProtectProject(resultSet.getString("protectProject"));
             maintain.setProtectState(resultSet.getInt("protectState"));
             maintain.setPlaceName(resultSet.getString("placeName"));
             maintain.setTrackName(resultSet.getString("trackName"));

@@ -143,7 +143,8 @@ public class deviceController {
     }
 
     @RequestMapping(value = "pageSearch",method = RequestMethod.POST)
-    public ModelAndView pageSearch(Device device,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
+    public ModelAndView pageSearch(Device device,HttpSession session,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
+        session.setAttribute(ConstantFields.SESSION_DEVICE_SEARCH_KEY,device);
         ModelAndView mav = new ModelAndView("admin/device/list");
         Page<Device> page = deviceService.list(device,pageable);
         mav.addObject(ConstantFields.PAGE_KEY,page);

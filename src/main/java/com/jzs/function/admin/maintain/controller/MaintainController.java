@@ -50,7 +50,7 @@ public class MaintainController {
         ModelAndView mav = new ModelAndView("admin/maintain/maintain");
         List<Maintain> list = maintainService.listForMaintain();
         mav.addObject("protectApprovePeople",maintainService.selectProtectApprovePeople());
-        mav.addObject("protectRequestPeoples",maintainService.selectProtectRequestPeople());
+        mav.addObject("protectRequestPeople",maintainService.selectProtectRequestPeople());
         mav.addObject("workers",maintainService.selectWorker());
         mav.addObject("list", list);
 
@@ -133,7 +133,7 @@ public class MaintainController {
     public ModelAndView routeIndex() {
         ModelAndView mav = new ModelAndView("admin/maintain/protect");
         mav.addObject("protectApprovePeople",maintainService.selectProtectApprovePeople());
-        mav.addObject("protectRequestPeoples",maintainService.selectProtectRequestPeople());
+        mav.addObject("protectRequestPeople",maintainService.selectProtectRequestPeople());
         mav.addObject("workers",maintainService.selectWorker());
         int state = maintainService.getInspectionState();
         mav.addObject("state", state);
@@ -156,7 +156,7 @@ public class MaintainController {
 
         if (0 == tmp) {
             if (LOG.isInfoEnabled())
-                LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser, maintain.getProtectProject());
+                LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser, "maintainProtect");
 
             redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_SUCCESS_KEY, ConstantFields.PROTECT_SUCCESS_MESSAGE);
             return "redirect:/admin/maintain/routeMaintainIndex.action";
@@ -177,7 +177,7 @@ public class MaintainController {
 
         if (0 == tmp) {
             if (LOG.isInfoEnabled())
-                LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser, maintain.getProtectProject());
+                LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser,"maintainProtect");
 
             redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_SUCCESS_KEY, ConstantFields.PROTECT_SUCCESS_MESSAGE);
             return "redirect:/admin/maintain/routeIndex.action";
@@ -198,7 +198,7 @@ public class MaintainController {
         if (maintainService.selectExitMaintain(maintain)) {
             if (maintainService.maintainAdd(maintain, logUser)) {
                 if (LOG.isInfoEnabled())
-                    LOG.info("[MANAGE] [OK] {} add new maintain {}.", logUser, maintain.getMaintainProject());
+                    LOG.info("[MANAGE] [OK] {} add new maintain {}.", logUser,"maintainProtect");
 
                 redirectAttributes.addFlashAttribute(ConstantFields.MAINTAIN_SUCCESS_KEY, ConstantFields.MAINTAIN_SUCCESS_MESSAGE);
                 return "redirect:/admin/maintain/routeMaintainIndex.action";
@@ -221,7 +221,7 @@ public class MaintainController {
         if (maintainService.selectExitMaintain(maintain)) {
             if (maintainService.maintainAdd(maintain, logUser)) {
                 if (LOG.isInfoEnabled())
-                    LOG.info("[MANAGE] [OK] {} add new maintain {}.", logUser, maintain.getMaintainProject());
+                    LOG.info("[MANAGE] [OK] {} add new maintain {}.", logUser, "maintainProtect");
 
                 redirectAttributes.addFlashAttribute(ConstantFields.MAINTAIN_SUCCESS_KEY, ConstantFields.MAINTAIN_SUCCESS_MESSAGE);
                 return "redirect:/admin/maintain/routeIndex.action";
@@ -252,6 +252,7 @@ public class MaintainController {
         maintain.setTrack(device.getTrack());
         maintain.setRegion(device.getRegion());
         maintain.setSeat(device.getSeat());
+        maintain.setDealResult("待定");
 
 //        if (maintainService.selectExitCanclePro(maintain)) {
             if (maintainService.updateMaintain(maintain, logUser)) {
@@ -279,6 +280,7 @@ public class MaintainController {
         maintain.setTrack(device.getTrack());
         maintain.setRegion(device.getRegion());
         maintain.setSeat(device.getSeat());
+        maintain.setDealResult("待定");
 
         if (maintainService.updateMaintain(maintain, logUser)) {
             if (LOG.isInfoEnabled())
@@ -409,6 +411,16 @@ public class MaintainController {
         List<Maintain> list = maintainService.selectTrackMaintains(track);
         Map<String,List<Maintain>> map = new HashMap<>();
         map.put("list",list);
+
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/selectJsonByFauId/{faultRegisterId}", method = RequestMethod.POST)
+    public Map<String,Maintain> selectJsonByFauId(@PathVariable("faultRegisterId") int faultRegisterId) {
+        Maintain jsonByFauId = maintainService.selectJsonByFauId(faultRegisterId);
+        Map<String,Maintain> map = new HashMap<>();
+        map.put("jsonByFauId",jsonByFauId);
 
         return map;
     }

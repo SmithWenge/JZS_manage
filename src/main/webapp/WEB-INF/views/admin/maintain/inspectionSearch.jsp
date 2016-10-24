@@ -88,7 +88,7 @@
                     <ul class="pager">
                         <c:if test="${page.number > 0 }">
                             <li class="previous">
-                                <a href="${contextPath}/admin/maintain/inspectionPage/page.action?page=${page.number - 1}"><span aria-hidden="true">&larr;</span> 上一页</a>
+                                <a href="${contextPath}/admin/maintain/inspectionPage.action?page=${page.number - 1}"><span aria-hidden="true">&larr;</span> 上一页</a>
                             </li>
                         </c:if>
                         <c:if test="${page.number <= 0 }">

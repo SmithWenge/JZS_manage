@@ -33,6 +33,10 @@ public class ConstantFields {
     public static final String MAIL_DEFAULT_USER_PASS_KEY = "mail.smtp.pass";
     public static final String MAIL_DEFAULT_STARTTLS_ENABLE_KEY = "mail.smtp.starttls.enable";
 
+    /* 退出登录异常key */
+    public static final String EXIT_INSPECTION_KEY = "exitInspectionMessage";
+    /* 退出登录异常消息 */
+    public static final String EXIT_INSPECTION_MESSAGE = "还存在未结束的巡检！";
     /* 添加账户不唯一 */
     public static final String ADD_NOTUNIQUE_KEY = "addNotNuiqueMessage";
     /* 添加账户不唯一消息 */

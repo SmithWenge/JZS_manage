@@ -190,7 +190,7 @@ public class DeviceRepository implements DeviceRepositoryI{
 
     @Override
     public List<Device> selectWarningDeviceId() {
-        String sql = "select deviceId from (select * from (SELECT deviceId,faultDay FROM jzs_devicemanagement AS D LEFT JOIN jzs_faultregister AS F ON F.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.deleteFlag = 0 AND D.cancelState = 1 AND D.deviceState != 3 ORDER BY faultDay DESC ) as a group by deviceId) AS b where faultDay < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
+        String sql = "select deviceId from (select * from (SELECT deviceId,faultDay FROM jzs_devicemanagement AS D LEFT JOIN jzs_faultregister AS F ON F.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.deleteFlag = 0 AND D.cancelState = 1 AND D.deviceState != 3 ORDER BY faultDay DESC ) as a group by deviceId) AS b where faultDay < DATE_SUB(CURDATE(), INTERVAL 18 MONTH)";
 
         try {
             return jdbcTemplate.query(sql,new SelectWarningDeviceIdRowMapper());
@@ -202,7 +202,7 @@ public class DeviceRepository implements DeviceRepositoryI{
 
     @Override
     public List<Device> selectWarningDeviceIdTwo() {
-        String sql = "SELECT D.deviceId FROM jzs_devicemanagement AS D LEFT JOIN jzs_faultregister AS F ON D.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.cancelState = 1 AND D.deleteFlag = 0 AND D.deviceState != 3 AND F.track IS NULL AND F.region IS NULL AND F.seat IS NULL AND D.deviceTime < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
+        String sql = "SELECT D.deviceId FROM jzs_devicemanagement AS D LEFT JOIN jzs_faultregister AS F ON D.track = F.track AND D.region = F.region AND D.seat = F.seat WHERE D.cancelState = 1 AND D.deleteFlag = 0 AND D.deviceState != 3 AND F.track IS NULL AND F.region IS NULL AND F.seat IS NULL AND D.deviceTime < DATE_SUB(CURDATE(), INTERVAL 18 MONTH)";
 
         try {
             return jdbcTemplate.query(sql,new SelectWarningDeviceIdRowMapper());

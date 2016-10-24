@@ -11,7 +11,7 @@ public interface MaintainRepositoryI {
 
     Maintain selectProtectApprovePeople();
     List<Maintain> selectProtectPeople();
-    List<Maintain> selectProtectRequestPeople();
+    Maintain selectProtectRequestPeople();
     List<Maintain> selectWorker();
     Boolean protectAdd(Maintain maintain);
     Page<Maintain> list(Maintain maintain,Pageable pageable);
@@ -56,4 +56,7 @@ public interface MaintainRepositoryI {
     Maintain selectPlaceAndTrack(int track);
     List<Maintain> selectTrackMaintains(int track);
     Maintain selectSeat(int faultRegisterId);
+
+    Boolean isExitInspection();
+
 }

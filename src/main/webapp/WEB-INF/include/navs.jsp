@@ -119,9 +119,6 @@
       <c:if test="${authority.authorityTwoId == 5}">
         <li role="presentation" class="active"><a id="deivceManager" href="${contextPath}/admin/device/routeList.action">顶位管理</a></li>
       </c:if>
-      <c:if test="${authority.authorityTwoId == 6}">
-        <li role="presentation" class="active"><a id="index_info" href="${contextPath}/admin/workerInfo/routeAdd.action">上岗登记</a></li>
-      </c:if>
       <c:if test="${authority.authorityTwoId == 7}">
         <li role="presentation" class="active"><a id="workerInfoList" href="${contextPath}/admin/workerInfo/routeList.action">在岗查询</a></li>
       </c:if>
