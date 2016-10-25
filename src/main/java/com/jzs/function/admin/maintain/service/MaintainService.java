@@ -98,6 +98,7 @@ public class MaintainService implements MaintainServiceI{
     public boolean maintainAdd(Maintain maintain, String logUser) throws BatchRollbackException{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         maintain.setRegisterTime(sdf.format(new Date()));
+        maintain.setLatestTime(maintain.getRegisterTime());
         SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy-MM-dd");
         maintain.setNewDate(sdfTwo.format(new Date()));
         maintain.setFaultState(2);

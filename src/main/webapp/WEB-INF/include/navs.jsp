@@ -125,8 +125,8 @@
       <c:if test="${authority.authorityTwoId == 30}">
         <li role="presentation" class="active downInfo"><a id="maintainManager">工作台 &nbsp;<span id="signal" class="glyphicon glyphicon-chevron-right downSign" aria-hidden="true"></span></a>
           <ul class="managerInfo" id="managerInfo">
-            <li role="presentation" class="active"><a id="protect" href="${contextPath}/admin/maintain/routeIndex.action">巡检管理 &nbsp;</a></li>
-            <li role="presentation" class="active"><a id="maintain" href="${contextPath}/admin/maintain/routeMaintainIndex.action">故障管理 &nbsp;</a></li>
+            <li role="presentation" class="active"><a id="protect" href="${contextPath}/admin/maintain/routeIndex.action">巡检维护 &nbsp;</a></li>
+            <li role="presentation" class="active"><a id="maintain" href="${contextPath}/admin/maintain/routeMaintainIndex.action">故障及防护维护 &nbsp;</a></li>
           </ul>
         </li>
       </c:if>

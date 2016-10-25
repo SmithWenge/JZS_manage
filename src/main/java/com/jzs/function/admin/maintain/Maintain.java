@@ -58,6 +58,15 @@ public class Maintain extends Entry{
     private int faultReason;
     private String dealResult;
     private String maintainName;
+    private String latestTime;
+
+    public String getLatestTime() {
+        return latestTime;
+    }
+
+    public void setLatestTime(String latestTime) {
+        this.latestTime = latestTime;
+    }
 
     public int getFaultNum() {
         return faultNum;

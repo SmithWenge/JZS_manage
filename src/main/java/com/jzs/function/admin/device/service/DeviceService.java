@@ -137,19 +137,13 @@ public class DeviceService implements DeviceServiceI{
 
     @Override
     public Boolean updateWarning() {
-        List<Device> listOne = repository.selectWarningDeviceId();
-        List<Device> listTwo = repository.selectWarningDeviceIdTwo();
-        for (int i = 0;i < listOne.size();i++) {
-            listTwo.add(listOne.get(i));
-        }
-        for (Device device : listTwo) {
-            repository.updateWaringDevice(device.getDeviceId());
-        }
-        return true;
+
+        return repository.updateWaringDevice();
     }
 
     @Override
     public int selectNumOfWarning() {
+
         return repository.selectNumOfWarning();
     }
 }

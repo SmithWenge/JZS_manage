@@ -146,7 +146,12 @@
                             </c:if>
                             <td>${device.rollingTimes}</td>
                             <tags:dictd groupValue="cancelState" itemKey="${device.cancelStateNum}" />
-                            <td>${device.latestTime}</td>
+                            <c:if test="${empty device.latestTime }">
+                                <td>无最近维修时间</td>
+                            </c:if>
+                            <c:if test="${!empty device.latestTime }">
+                                <td>${device.latestTime}</td>
+                            </c:if>
                             <td>
                             <c:forEach items="${sessionScope.functions}" var="function">
                                 <c:if test="${function.functionId == 17}">

@@ -173,9 +173,10 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Boolean updateDevice(Maintain maintain,int state) {
-        String sql = "UPDATE jzs_devicemanagement SET deviceState = ? WHERE track = ? AND region = ? AND seat = ? AND cancelState = 1 AND deleteFlag = 0";
+        String sql = "UPDATE jzs_devicemanagement SET deviceState = ?,latestTime = ? WHERE track = ? AND region = ? AND seat = ? AND cancelState = 1 AND deleteFlag = 0";
         Object[] args = {
                 state,
+                maintain.getLatestTime(),
                 maintain.getTrack(),
                 maintain.getRegion(),
                 maintain.getSeat()
@@ -410,7 +411,7 @@ public class MaintainRepository implements MaintainRepositoryI{
         };
 
 
-        return jdbcTemplate.queryForObject(sql,args, Integer.class) > 0 ? 1 : 0;
+        return jdbcTemplate.queryForObject(sql,args, Integer.class);
     }
 
     @Override
@@ -564,7 +565,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Maintain selectMaintainById(int faultRegisterId) {
-        String sql = "SELECT faultRegisterId,F.track,faultState,faultType,P.placeName,T.trackName,R.regionName,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,pinTime,faultReason,dealResult FROM jzs_faultregister AS F LEFT JOIN jzs_track AS T ON F.track = T.trackId LEFT JOIN jzs_region AS R ON F.region = R.regionId LEFT JOIN jzs_place AS P ON F.place = P.placeId WHERE F.deleteFlag = 0 AND F.faultState = 2 AND faultRegisterId = ?";
+        String sql = "SELECT faultRegisterId,F.track,faultState,faultType,P.placeName,T.trackName,R.regionName,seat,faultFindPeople,faultRegisterPeople,faultDealPeople,registerTime,pinTime,faultReason,dealResult FROM jzs_faultregister AS F LEFT JOIN jzs_track AS T ON F.track = T.trackId LEFT JOIN jzs_region AS R ON F.region = R.regionId LEFT JOIN jzs_place AS P ON F.place = P.placeId WHERE F.deleteFlag = 0 AND faultRegisterId = ?";
         Object[] args = {
                 faultRegisterId
         };
