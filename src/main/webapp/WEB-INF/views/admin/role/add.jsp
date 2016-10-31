@@ -80,12 +80,6 @@
                     <%--<li><input type="checkbox" name="selectMaintains" data-labelauty="${selectMaintain.functionName}" value="${selectMaintain.functionIdS}${":"}${"8"}"></li>--%>
                   <%--</c:forEach>--%>
                 <%--</ul>--%>
-                <li class="col-sm-2 alignR"><b>值班员工作台</b></li>
-                <ul class="dowebok">
-                  <c:forEach items="${maintains}" var="maintain">
-                    <li><input type="checkbox" name="maintains" data-labelauty="${maintain.functionName}" value="${maintain.functionIdS}${":"}${"30"}"></li>
-                  </c:forEach>
-                </ul>
                 <li class="col-sm-2 alignR"><b>场管理</b></li>
                 <ul class="dowebok">
                   <c:forEach items="${places}" var="place">
@@ -104,24 +98,36 @@
                     <li><input type="checkbox" name="regions" data-labelauty="${region.functionName}" value="${region.functionIdS}${":"}${"12"}"></li>
                   </c:forEach>
                 </ul>
-                  <li class="col-sm-2 alignR"><b>巡检查询</b></li>
-                  <ul class="dowebok">
-                    <c:forEach items="${selectInspections}" var="selectInspection">
-                      <li><input type="checkbox" name="selectInspections" data-labelauty="${selectInspection.functionName}" value="${selectInspection.functionIdS}${":"}${"13"}"></li>
-                    </c:forEach>
-                  </ul>
-                  <li class="col-sm-2 alignR"><b>防护查询</b></li>
-                  <ul class="dowebok">
-                    <c:forEach items="${selectProtections}" var="selectProtection">
-                      <li><input type="checkbox" name="selectProtections" data-labelauty="${selectProtection.functionName}" value="${selectProtection.functionIdS}${":"}${"14"}"></li>
-                    </c:forEach>
-                  </ul>
-                  <li class="col-sm-2 alignR"><b>维修查询</b></li>
-                  <ul class="dowebok">
-                    <c:forEach items="${maintainSearchs}" var="maintainSearch">
-                      <li><input type="checkbox" name="maintainSearchs" data-labelauty="${maintainSearch.functionName}" value="${maintainSearch.functionIdS}${":"}${"15"}"></li>
-                    </c:forEach>
-                  </ul>
+                <li class="col-sm-2 alignR"><b>故障类型管理</b></li>
+                <ul class="dowebok">
+                  <c:forEach items="${faultTypes}" var="faultType">
+                    <li><input type="checkbox" name="faultTypes" data-labelauty="${faultType.functionName}" value="${faultType.functionIdS}${":"}${"16"}"></li>
+                  </c:forEach>
+                </ul>
+                <li class="col-sm-2 alignR"><b>巡检查询</b></li>
+                <ul class="dowebok">
+                  <c:forEach items="${selectInspections}" var="selectInspection">
+                    <li><input type="checkbox" name="selectInspections" data-labelauty="${selectInspection.functionName}" value="${selectInspection.functionIdS}${":"}${"13"}"></li>
+                  </c:forEach>
+                </ul>
+                <li class="col-sm-2 alignR"><b>防护查询</b></li>
+                <ul class="dowebok">
+                  <c:forEach items="${selectProtections}" var="selectProtection">
+                    <li><input type="checkbox" name="selectProtections" data-labelauty="${selectProtection.functionName}" value="${selectProtection.functionIdS}${":"}${"14"}"></li>
+                  </c:forEach>
+                </ul>
+                <li class="col-sm-2 alignR"><b>维修查询</b></li>
+                <ul class="dowebok">
+                  <c:forEach items="${maintainSearchs}" var="maintainSearch">
+                    <li><input type="checkbox" name="maintainSearchs" data-labelauty="${maintainSearch.functionName}" value="${maintainSearch.functionIdS}${":"}${"15"}"></li>
+                  </c:forEach>
+                </ul>
+                <li class="col-sm-2 alignR"><b>值班员工作台</b></li>
+                <ul class="dowebok">
+                  <c:forEach items="${maintains}" var="maintain">
+                    <li><input type="checkbox" name="maintains" data-labelauty="${maintain.functionName}" value="${maintain.functionIdS}${":"}${"30"}"></li>
+                  </c:forEach>
+                </ul>
               </ul>
           </div>
           <div class="form-group">

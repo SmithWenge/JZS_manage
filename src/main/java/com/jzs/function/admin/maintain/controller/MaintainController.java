@@ -2,6 +2,8 @@ package com.jzs.function.admin.maintain.controller;
 
 import com.jzs.arc.exception.BatchRollbackException;
 import com.jzs.arc.utils.ConstantFields;
+import com.jzs.function.admin.faultType.FaultType;
+import com.jzs.function.admin.faultType.service.FaultTypeServiceI;
 import com.jzs.function.admin.login.AdminUser;
 import com.jzs.function.admin.maintain.Maintain;
 import com.jzs.function.admin.maintain.service.MaintainServiceI;
@@ -35,6 +37,8 @@ public class MaintainController {
     private MaintainServiceI maintainService;
     @Autowired
     private TrackRepositoryI trackRepository;
+    @Autowired
+    private FaultTypeServiceI faultTypeService;
 
     @RequestMapping(value = "maintainCheck/{faultRegisterId}",method = RequestMethod.GET)
     public ModelAndView routeMaintainCheck(@PathVariable("faultRegisterId") int faultRegisterId) {
@@ -53,6 +57,7 @@ public class MaintainController {
         mav.addObject("protectRequestPeople",maintainService.selectProtectRequestPeople());
         mav.addObject("workers",maintainService.selectWorker());
         mav.addObject("list", list);
+        mav.addObject("faultTypes",faultTypeService.list());
 
         return mav;
     }
@@ -137,6 +142,7 @@ public class MaintainController {
         mav.addObject("workers",maintainService.selectWorker());
         int state = maintainService.getInspectionState();
         mav.addObject("state", state);
+        mav.addObject("faultTypes",faultTypeService.list());
 
         if (state != 0) {
             int placeId = maintainService.getInspectionId().getPlace();
@@ -194,6 +200,12 @@ public class MaintainController {
     public String reMaintainAdd(Maintain maintain, HttpSession session, RedirectAttributes redirectAttributes) throws BatchRollbackException {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
         String logUser = user.getUserName();
+
+        String faultFindPeopleText = maintain.getFaultFindPeopleText();
+        if (faultFindPeopleText != null && !faultFindPeopleText.equals("")) {
+            maintain.setFaultFindPeople(faultFindPeopleText);
+        }
+
         maintain.setPlace(maintainService.selectPlaceId(maintain.getTrack()));
         if (maintainService.selectExitMaintain(maintain)) {
             if (maintainService.maintainAdd(maintain, logUser)) {
@@ -311,6 +323,7 @@ public class MaintainController {
         Page<Maintain> page = maintainService.listMaintain(maintain, pageable);
         ModelAndView mav = new ModelAndView("admin/maintain/maintainSearch");
         mav.addObject(ConstantFields.PAGE_KEY, page);
+        mav.addObject("faultTypes",faultTypeService.list());
 
         return mav;
     }
@@ -351,6 +364,7 @@ public class MaintainController {
         ModelAndView mav = new ModelAndView("admin/maintain/maintainSearch");
         Page<Maintain> page = maintainService.listMaintain(maintain, pageable);
         mav.addObject(ConstantFields.PAGE_KEY,page);
+        mav.addObject("faultTypes",faultTypeService.list());
 
         return mav;
     }

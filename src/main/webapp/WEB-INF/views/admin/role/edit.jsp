@@ -161,22 +161,6 @@
                 <%--</c:forEach>--%>
               <%--</c:if>--%>
               <%--</ul>--%>
-              <li class="col-sm-2 alignR"><b>值班员工作台</b></li>
-              <ul class="dowebok">
-              <c:if test="${not empty maintains}">
-                <c:forEach items="${maintains}" var="maintain">
-                  <li><input type="checkbox" checked = "checked" name="maintains" data-labelauty="${maintain.functionName}" value="${maintain.functionIdS}${":"}${"30"}"></li>
-                </c:forEach>
-                <c:forEach items="${maintainsCut}" var="maintainC">
-                  <li><input type="checkbox" name="maintains" data-labelauty="${maintainC.functionName}" value="${maintainC.functionIdS}${":"}${"30"}"></li>
-                </c:forEach>
-              </c:if>
-              <c:if test="${empty maintains}">
-                <c:forEach items="${maintainsAll}" var="maintainA">
-                  <li><input type="checkbox" name="maintains" data-labelauty="${maintainA.functionName}" value="${maintainA.functionIdS}${":"}${"30"}"></li>
-                </c:forEach>
-              </c:if>
-              </ul>
               <li class="col-sm-2 alignR"><b>场管理</b></li>
               <ul class="dowebok">
                 <c:if test="${not empty places}">
@@ -225,6 +209,22 @@
                   </c:forEach>
                 </c:if>
               </ul>
+                <li class="col-sm-2 alignR"><b>故障类型管理</b></li>
+                <ul class="dowebok">
+                  <c:if test="${not empty faultTypes}">
+                    <c:forEach items="${faultTypes}" var="faultType">
+                      <li><input type="checkbox" checked = "checked" name="faultTypes" data-labelauty="${faultType.functionName}" value="${faultType.functionIdS}${":"}${"16"}"></li>
+                    </c:forEach>
+                    <c:forEach items="${faultTypesCut}" var="faultTypesC">
+                      <li><input type="checkbox" name="faultTypes" data-labelauty="${faultTypesC.functionName}" value="${faultTypesC.functionIdS}${":"}${"16"}"></li>
+                    </c:forEach>
+                  </c:if>
+                  <c:if test="${empty faultTypes}">
+                    <c:forEach items="${faultTypesAll}" var="faultTypesA">
+                      <li><input type="checkbox" name="faultTypes" data-labelauty="${faultTypesA.functionName}" value="${faultTypesA.functionIdS}${":"}${"16"}"></li>
+                    </c:forEach>
+                  </c:if>
+                </ul>
               <li class="col-sm-2 alignR"><b>巡检查询</b></li>
               <ul class="dowebok">
                 <c:if test="${not empty selectInspections}">
@@ -270,6 +270,22 @@
                 <c:if test="${empty maintainSearchs}">
                   <c:forEach items="${maintainSearchsAll}" var="maintainSearchsA">
                     <li><input type="checkbox" name="maintainSearchs" data-labelauty="${maintainSearchsA.functionName}" value="${maintainSearchsA.functionIdS}${":"}${"15"}"></li>
+                  </c:forEach>
+                </c:if>
+              </ul>
+              <li class="col-sm-2 alignR"><b>值班员工作台</b></li>
+              <ul class="dowebok">
+                <c:if test="${not empty maintains}">
+                  <c:forEach items="${maintains}" var="maintain">
+                    <li><input type="checkbox" checked = "checked" name="maintains" data-labelauty="${maintain.functionName}" value="${maintain.functionIdS}${":"}${"30"}"></li>
+                  </c:forEach>
+                  <c:forEach items="${maintainsCut}" var="maintainC">
+                    <li><input type="checkbox" name="maintains" data-labelauty="${maintainC.functionName}" value="${maintainC.functionIdS}${":"}${"30"}"></li>
+                  </c:forEach>
+                </c:if>
+                <c:if test="${empty maintains}">
+                  <c:forEach items="${maintainsAll}" var="maintainA">
+                    <li><input type="checkbox" name="maintains" data-labelauty="${maintainA.functionName}" value="${maintainA.functionIdS}${":"}${"30"}"></li>
                   </c:forEach>
                 </c:if>
               </ul>

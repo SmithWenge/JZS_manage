@@ -224,7 +224,10 @@ public class MaintainRepository implements MaintainRepositoryI{
                 sql.append(" AND seat = ?");
                 list.add(maintain.getSeat());
             }
-
+            if (maintain.getFaultType() > 0) {
+                sql.append(" AND faultType = ?");
+                list.add(maintain.getFaultType());
+            }
             if (maintain.getFaultDay() != null) {
                 sql.append(" AND faultDay = ?");
                 list.add(maintain.getFaultDay());

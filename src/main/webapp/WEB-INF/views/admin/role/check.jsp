@@ -88,14 +88,6 @@
                   <%--</c:forEach>--%>
                 <%--</ul>--%>
               <%--</c:if>--%>
-              <c:if test="${not empty maintains}">
-                <li class="col-sm-2 alignR"><b>值班员工作台</b></li>
-                <ul class="dowebok">
-                  <c:forEach items="${maintains}" var="maintain">
-                    <li><input class="btn btn-default" type="button" disabled="disabled" name="maintains" value="${maintain.functionName}"></li>
-                  </c:forEach>
-                </ul>
-              </c:if>
                 <c:if test="${not empty places}">
                   <li class="col-sm-2 alignR"><b>场管理</b></li>
                   <ul class="dowebok">
@@ -120,6 +112,14 @@
                     </c:forEach>
                   </ul>
                 </c:if>
+                <c:if test="${not empty faultTypes}">
+                  <li class="col-sm-2 alignR"><b>故障类型管理</b></li>
+                  <ul class="dowebok">
+                    <c:forEach items="${faultTypes}" var="faultType">
+                      <li><input class="btn btn-default" type="button" disabled="disabled" name="adminUserCheckbox" value="${faultType.functionName}"></li>
+                    </c:forEach>
+                  </ul>
+                </c:if>
                 <c:if test="${not empty selectInspections}">
                   <li class="col-sm-2 alignR"><b>巡检查询</b></li>
                   <ul class="dowebok">
@@ -141,6 +141,14 @@
                   <ul class="dowebok">
                     <c:forEach items="${maintainSearchs}" var="maintainSearch">
                       <li><input class="btn btn-default" type="button" disabled="disabled" name="adminUserCheckbox" value="${maintainSearch.functionName}"></li>
+                    </c:forEach>
+                  </ul>
+                </c:if>
+                <c:if test="${not empty maintains}">
+                  <li class="col-sm-2 alignR"><b>值班员工作台</b></li>
+                  <ul class="dowebok">
+                    <c:forEach items="${maintains}" var="maintain">
+                      <li><input class="btn btn-default" type="button" disabled="disabled" name="maintains" value="${maintain.functionName}"></li>
                     </c:forEach>
                   </ul>
                 </c:if>

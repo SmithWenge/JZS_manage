@@ -299,7 +299,11 @@
           <div class="form-group">
             <label for="faultType" class="col-sm-2 control-label">故障类型</label>
             <div class="col-sm-10">
-              <tags:dicselect name="faultType" key="faultType" value="1" id="faultType" />
+              <select class="form-control" id="faultType" name="faultType">
+                <c:forEach items="${faultTypes}" var="faultType">
+                  <option value="${faultType.faultTypeId}">${faultType.faultTypeName}</option>
+                </c:forEach>
+              </select>
             </div>
           </div>
           <div class="form-group" id="findPeople">

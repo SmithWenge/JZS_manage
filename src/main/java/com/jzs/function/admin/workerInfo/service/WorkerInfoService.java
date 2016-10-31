@@ -53,7 +53,7 @@ public class WorkerInfoService implements WorkerInfoServiceI{
     @Override
     public boolean add(List<String> list,String logUsesr) throws BatchRollbackException{
         Object[] args = new Object[3];
-        Object[] args2 = new Object[1];
+        Object[] args2 = new Object[2];
         WorkerInfo workerInfo = new WorkerInfo();
         workerInfo.setAttendanceDate(new Date());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -63,12 +63,13 @@ public class WorkerInfoService implements WorkerInfoServiceI{
         int successNum3 = 0;
         args[0] = workerInfo.getAttendanceDate();
         args[1] = workerInfo.getAttendanceTime();
+        args2[0] = workerInfo.getAttendanceDate();
         workerInfoRepository.temDelete();
         for (String userString : list) {
             String[] users = ChecksToList.getString(userString);
             for (String user : users) {
                 args[2] = Integer.parseInt(user);
-                args2[0] = Integer.parseInt(user);
+                args2[1] = Integer.parseInt(user);
                 successNum3 += workerInfoRepository.temAdd(args2);
                 successNum1 += workerInfoRepository.add(args);
                 successNum2 += 1;
@@ -101,7 +102,9 @@ public class WorkerInfoService implements WorkerInfoServiceI{
 
     @Override
     public List<WorkerInfo> listForHome() {
-        return workerInfoRepository.listForHome();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String attendanceDate = sdf.format(new Date());
+        return workerInfoRepository.listForHome(attendanceDate);
     }
 
     @Override

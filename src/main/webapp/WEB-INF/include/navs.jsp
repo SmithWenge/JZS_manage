@@ -89,6 +89,9 @@
       <%--<c:if test="${authority.authorityTwoId == 1}">--%>
         <%--<li role="presentation" class="active"><a id="workerManager" href="${contextPath}/admin/worker/routeList.action">工人管理</a></li>--%>
       <%--</c:if>--%>
+      <c:if test="${authority.authorityTwoId == 16}">
+        <li role="presentation" class="active"><a id="faultType" href="${contextPath}/admin/faultType/routeList.action">故障类型管理</a></li>
+      </c:if>
       <c:if test="${authority.authorityTwoId == 10}">
         <li role="presentation" class="active"><a id="placeManager" href="${contextPath}/admin/place/routeList.action">场管理</a></li>
       </c:if>

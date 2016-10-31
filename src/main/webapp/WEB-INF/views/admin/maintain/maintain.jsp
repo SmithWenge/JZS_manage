@@ -249,7 +249,11 @@
                     <div class="form-group">
                         <label for="faultType" class="col-sm-2 control-label">故障类型</label>
                         <div class="col-sm-10">
-                            <tags:dicselect name="faultType" key="faultType" value="1" id="faultType" />
+                            <select class="form-control" id="faultType" name="faultType">
+                                <c:forEach items="${faultTypes}" var="faultType">
+                                    <option value="${faultType.faultTypeId}">${faultType.faultTypeName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group" id="findPeople">
@@ -259,7 +263,14 @@
                                 <c:forEach items="${workers}" var="worker">
                                     <option value="${worker.userName}" selected>${worker.userName}</option>
                                 </c:forEach>
+                                <option value="qt">其他</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="findPeopleText">
+                        <label for="faultFindPeopleText" class="col-sm-2 control-label">发现人</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="faultFindPeopleText" name="faultFindPeopleText" placeholder="请输入发现人姓名">
                         </div>
                     </div>
                     <div class="form-group">
@@ -333,6 +344,16 @@
         // 设置table表格中的行高
         var $height = $('#paginationTable td').height() + 'px';
         $('#paginationTable td').css('line-height', $height);
+
+        document.getElementById('findPeopleText').style.display = "none";
+        $("#faultFindPeople").on('change',function() {
+            var $value = $("#faultFindPeople").val();
+            if($value == "qt") {
+                document.getElementById('findPeopleText').style.display = "";
+            }else {
+                document.getElementById('findPeopleText').style.display = "none";
+            }
+        });
 
         $(".btn.btn-success").click(function() {
             var value = $(this).attr("name"); // $(this)表示获取当前被点击元素的name值

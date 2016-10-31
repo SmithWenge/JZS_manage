@@ -23,36 +23,39 @@ public class PlaceService implements PlaceServiceI{
 
     @Override
     public Boolean add(Place place, String logUser) {
-
         if (placeRepository.add(place)) {
             LogContent logContent = new LogContent(logUser, "添加场" + place.getPlaceName(), 1, 3);
             logRepository.insertLog(logContent);
+
             return true;
         }else {
+
             return false;
         }
     }
 
     @Override
     public Boolean edit(Place place, String logUser) {
-
         if (placeRepository.update(place)) {
             LogContent logContent = new LogContent(logUser, "编辑场" + place.getPlaceName(), 1, 4);
             logRepository.insertLog(logContent);
+
             return true;
         }else {
+
             return false;
         }
     }
 
     @Override
     public Boolean cancle(int placeId,String logUser) {
-
         if (placeRepository.delete(placeId)) {
             LogContent logContent = new LogContent(logUser, "删除场的Id为" + placeId, 1, 2);
             logRepository.insertLog(logContent);
+
             return true;
         }else {
+
             return false;
         }
     }

@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -117,15 +118,28 @@ public class AdminLoginController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session,RedirectAttributes redirectAttributes) {
-//        if (maintainService.isExitInspection()) {
-//            redirectAttributes.addFlashAttribute(ConstantFields.EXIT_INSPECTION_KEY, ConstantFields.EXIT_INSPECTION_MESSAGE);
-//
-//            return "redirect:/admin/home/index.action";
-//        } else {
-            workerInfoService.temDelete();
+        List<Authority> list = (List<Authority>)session.getAttribute(ConstantFields.SESSION_FUNCTION_KEY);
+        int i = 0;
+        for (Authority authority : list) {
+            if (authority.getFunctionId() == 42 || authority.getFunctionId() == 43) {
+                i++;
+            }
+        }
+        if (i == 2) {
+            if (maintainService.isExitInspection()) {
+                redirectAttributes.addFlashAttribute(ConstantFields.EXIT_INSPECTION_KEY, ConstantFields.EXIT_INSPECTION_MESSAGE);
+
+                return "redirect:/admin/home/index.action";
+            } else {
+                workerInfoService.temDelete();
+                session.removeAttribute(ConstantFields.SESSION_ADMIN_KEY);
+
+                return "redirect:/admin/routeLogin.action";
+            }
+        } else {
             session.removeAttribute(ConstantFields.SESSION_ADMIN_KEY);
 
             return "redirect:/admin/routeLogin.action";
-//        }
+        }
     }
 }

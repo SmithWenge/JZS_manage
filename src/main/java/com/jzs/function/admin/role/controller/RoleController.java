@@ -85,6 +85,8 @@ public class RoleController {
         mav.addObject("selectProtections",selectProtections);
         List<Role> maintainSearchs =roleService.selectFunctions(15);
         mav.addObject("maintainSearchs",maintainSearchs);
+        List<Role> faultTypes =roleService.selectFunctions(16);
+        mav.addObject("faultTypes",faultTypes);
         return mav;
     }
 
@@ -104,14 +106,17 @@ public class RoleController {
                       @RequestParam(value = "regions",required=false)String regions,
                       @RequestParam(value = "selectInspections",required=false)String selectInspections,
                       @RequestParam(value = "selectProtections",required=false)String selectProtections,
-                      @RequestParam(value = "maintainSearchs",required=false)String maintainSearchs
-
+                      @RequestParam(value = "maintainSearchs",required=false)String maintainSearchs,
+                      @RequestParam(value = "faultTypes",required=false)String faultTypes
                       ) throws BatchRollbackException {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
         String logUser = user.getUserName();
         List<String> list = new ArrayList<String>();
         if(workerCheckbox != null) {
             list.add(workerCheckbox);
+        }
+        if(faultTypes != null) {
+            list.add(faultTypes);
         }
         if (adminUserCheckbox != null) {
             list.add(adminUserCheckbox);
@@ -221,6 +226,8 @@ public class RoleController {
         mav.addObject("selectProtections",roleService.selectRoleFunction(role));
         role.setAuthorityTwoId(15);
         mav.addObject("maintainSearchs",roleService.selectRoleFunction(role));
+        role.setAuthorityTwoId(16);
+        mav.addObject("faultTypes",roleService.selectRoleFunction(role));
 
         return mav;
     }
@@ -275,6 +282,9 @@ public class RoleController {
         role.setAuthorityTwoId(15);
         List<Role> maintainSearchs = roleService.selectRoleFunction(role);
         mav.addObject("maintainSearchs", maintainSearchs);
+        role.setAuthorityTwoId(16);
+        List<Role> faultTypes = roleService.selectRoleFunction(role);
+        mav.addObject("faultTypes", faultTypes);
 
         List<Role> workersAll =roleService.selectFunctions(1);
         mav.addObject("workersAll",workersAll);
@@ -306,6 +316,8 @@ public class RoleController {
         mav.addObject("selectProtectionsAll", selectProtectionsAll);
         List<Role> maintainSearchsAll =roleService.selectFunctions(15);
         mav.addObject("maintainSearchsAll",maintainSearchsAll);
+        List<Role> faultTypesAll =roleService.selectFunctions(16);
+        mav.addObject("faultTypesAll",faultTypesAll);
 
         mav.addObject("workersCut", ListCutUtils.getList(workersAll,workers));
         mav.addObject("adminUsersCut", ListCutUtils.getList(adminUsersAll,adminUsers));
@@ -322,6 +334,7 @@ public class RoleController {
         mav.addObject("selectInspectionsCut", ListCutUtils.getList(selectInspectionsAll,selectInspections));
         mav.addObject("selectProtectionsCut", ListCutUtils.getList(selectProtectionsAll,selectProtections));
         mav.addObject("maintainSearchsCut", ListCutUtils.getList(maintainSearchsAll,maintainSearchs));
+        mav.addObject("faultTypesCut", ListCutUtils.getList(faultTypesAll,faultTypes));
 
         return mav;
     }
@@ -342,13 +355,17 @@ public class RoleController {
                        @RequestParam(value = "regions",required=false)String regions,
                        @RequestParam(value = "selectInspections",required=false)String selectInspections,
                        @RequestParam(value = "selectProtections",required=false)String selectProtections,
-                       @RequestParam(value = "maintainSearchs",required=false)String maintainSearchs
+                       @RequestParam(value = "maintainSearchs",required=false)String maintainSearchs,
+                       @RequestParam(value = "faultTypes",required=false)String faultTypes
     ) throws BatchRollbackException {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
         String logUser = user.getUserName();
         List<String> list = new ArrayList<String>();
         if(workerCheckbox != null) {
             list.add(workerCheckbox);
+        }
+        if(faultTypes != null) {
+            list.add(faultTypes);
         }
         if (adminUserCheckbox != null) {
             list.add(adminUserCheckbox);

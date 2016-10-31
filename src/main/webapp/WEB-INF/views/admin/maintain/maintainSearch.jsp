@@ -6,61 +6,70 @@
     <div class="panel-heading" style="height: 45px;padding-top: 5px;">
         <ul class="nav nav-pills">
             <li role="presentation" ><a href="${contextPath}/admin/maintain/maintainPage.action"><span class="glyphicon glyphicon-map-marker"></span>维修查询 &nbsp;&nbsp;</a></li>
-            <li role="presentation">
-                <c:forEach items="${sessionScope.functions}" var="function">
-                    <c:if test="${function.functionId == 25}">
-                        <form class="form-inline" action="${contextPath}/admin/maintain/maintainSearch.action" method="post">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="place">场</label>
-                                    <select class="form-control" id="place" name="place">
-                                        <option value="0">全部</option>
-                                        <c:forEach items="${sessionScope.places}" var="place">
-                                            <option value="${place.placeId}">${place.placeName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="track">道</label>
-                                    <select class="form-control" id="track" name="track">
-                                        <option value="0">全部</option>
-                                        <c:forEach items="${sessionScope.tracks}" var="track">
-                                            <option value="${track.trackId}">${track.trackName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="region">区</label>
-                                    <select class="form-control" id="region" name="region">
-                                        <option value="0">全部</option>
-                                        <c:forEach items="${sessionScope.regions}" var="region">
-                                            <option value="${region.regionId}">${region.regionName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="seat">位置</label>
-                                    <input type="text" class="form-control" id="seat" name="seat">
-                                </div>
-                                <div class="form-group">
-                                    <label for="faultState">故障状态</label>
-                                    <tags:dicselect name="faultState" key="faultState" value="0" id="faultState" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="faultDay">故障日期</label>
-                                    <input type="date" class="form-control" id="faultDay" name="faultDay">
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-default">检索</button>
-                                </div>
-                            </div>
-                        </form>
-                    </c:if>
-                </c:forEach>
-            </li>
         </ul>
     </div>
     <div class="panel-body">
+        <li role="presentation">
+            <c:forEach items="${sessionScope.functions}" var="function">
+                <c:if test="${function.functionId == 25}">
+                    <form class="form-inline" action="${contextPath}/admin/maintain/maintainSearch.action" method="post">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="place">&nbsp;&nbsp;&nbsp;&nbsp;场</label>
+                                <select class="form-control" id="place" name="place">
+                                    <option value="0">全部</option>
+                                    <c:forEach items="${sessionScope.places}" var="place">
+                                        <option value="${place.placeId}">${place.placeName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="track">道</label>
+                                <select class="form-control" id="track" name="track">
+                                    <option value="0">全部</option>
+                                    <c:forEach items="${sessionScope.tracks}" var="track">
+                                        <option value="${track.trackId}">${track.trackName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="region">区</label>
+                                <select class="form-control" id="region" name="region">
+                                    <option value="0">全部</option>
+                                    <c:forEach items="${sessionScope.regions}" var="region">
+                                        <option value="${region.regionId}">${region.regionName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="seat">位置</label>
+                                <input type="text" class="form-control" id="seat" name="seat" style="width:90px">
+                            </div>
+                            <div class="form-group">
+                                <label for="faultType">故障类型</label>
+                                <select class="form-control" id="faultType" name="faultType">
+                                    <option value="0">全部</option>
+                                    <c:forEach items="${faultTypes}" var="faultType">
+                                        <option value="${faultType.faultTypeId}">${faultType.faultTypeName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="faultState">故障状态</label>
+                                <tags:dicselect name="faultState" key="faultState" value="0" id="faultState" />
+                            </div>
+                            <div class="form-group">
+                                <label for="faultDay">故障日期</label>
+                                <input type="date" class="form-control" id="faultDay" name="faultDay" style="width:120px">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">检索</button>
+                            </div>
+                        </div>
+                    </form>
+                </c:if>
+            </c:forEach>
+        </li>
         <div class="row" style="margin-top: 5px;">
             <div class="col-md-12">
                 <table class="table" id="paginationTable" align="center">
@@ -73,6 +82,7 @@
                         <th>故障类型</th>
                         <th>故障状态</th>
                         <th>登记时间</th>
+                        <th>销记时间</th>
                         <th>操作</th>
                     </tr>
                     <c:forEach items="${page.content}" var="maintain" varStatus="status">
@@ -85,6 +95,7 @@
                             <tags:dictd groupValue="faultType" itemKey="${maintain.faultType}" />
                             <tags:dictd groupValue="faultState" itemKey="${maintain.faultState}" />
                             <td>${maintain.registerTime}</td>
+                            <td>${maintain.pinTime}</td>
                             <td>
                             <c:forEach items="${sessionScope.functions}" var="function">
                                 <c:if test="${function.functionId == 40}">

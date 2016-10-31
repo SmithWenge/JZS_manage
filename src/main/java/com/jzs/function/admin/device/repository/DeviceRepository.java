@@ -234,7 +234,7 @@ public class DeviceRepository implements DeviceRepositoryI{
 
     @Override
     public Boolean updateWaringDevice() {
-        String sql = "UPDATE  jzs_devicemanagement SET deviceState = 2 WHERE deviceTime < DATE_SUB(CURDATE(), INTERVAL 18 MONTH) AND latestTime IS NULL AND cancelState = 1 OR deviceTime < DATE_SUB(CURDATE(), INTERVAL 18 MONTH) AND latestTime < DATE_SUB(CURDATE(), INTERVAL 18 MONTH) AND cancelState = 1";
+        String sql = "UPDATE  jzs_devicemanagement SET deviceState = 2 WHERE deviceTime < DATE_SUB(CURDATE(), INTERVAL 42 MONTH) AND latestTime IS NULL AND cancelState = 1 OR deviceTime < DATE_SUB(CURDATE(), INTERVAL 42 MONTH) AND latestTime < DATE_SUB(CURDATE(), INTERVAL 42 MONTH) AND cancelState = 1";
 
         return jdbcTemplate.update(sql) >= 0 ? true:false;
     }

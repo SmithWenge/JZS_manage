@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +89,7 @@ public class WorkerInfoRepository implements WorkerInfoRepositoryI{
 
     @Override
     public int temAdd(Object[] args) {
-        String sql = "INSERT INTO jzs_temattendance (userId) VALUES (?)";
+        String sql = "INSERT INTO jzs_temattendance (attendanceDate,userId) VALUES (?,?)";
 
         return jdbcTemplate.update(sql,args);
     }
@@ -142,11 +143,14 @@ public class WorkerInfoRepository implements WorkerInfoRepositoryI{
     }
 
     @Override
-    public List<WorkerInfo> listForHome() {
-        String sql = "SELECT A.userId,userName,userGender,userPost,userTelOne FROM jzs_temattendance AS A LEFT JOIN jzs_user AS U ON A.userId = U.userId WHERE A.deleteFlag = 0";
+    public List<WorkerInfo> listForHome(String attendanceDate) {
+        String sql = "SELECT A.userId,userName,userGender,userPost,userTelOne,attendanceDate FROM jzs_temattendance AS A LEFT JOIN jzs_user AS U ON A.userId = U.userId WHERE attendanceDate = ? AND A.deleteFlag = 0";
 
+        Object[] args = {
+                attendanceDate
+        };
         try {
-            return jdbcTemplate.query(sql,new ListForHomeRowMapper());
+            return jdbcTemplate.query(sql,args,new ListForHomeRowMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -180,6 +184,7 @@ public class WorkerInfoRepository implements WorkerInfoRepositoryI{
             workerInfo.setUserGender(resultSet.getInt("userGender"));
             workerInfo.setUserPost(resultSet.getInt("userPost"));
             workerInfo.setUserTelOne(resultSet.getString("userTelOne"));
+            workerInfo.setAttendanceTime(resultSet.getString("attendanceDate"));
 
             return workerInfo;
         }
