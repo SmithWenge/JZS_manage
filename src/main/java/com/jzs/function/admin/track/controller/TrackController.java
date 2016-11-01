@@ -11,11 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("admin/track")
@@ -61,7 +64,7 @@ public class TrackController {
     public ModelAndView routeEdit(@PathVariable("trackId") int trackId) {
 
         ModelAndView mav = new ModelAndView("admin/track/edit");
-        mav.addObject("track",trackService.select(trackId));
+        mav.addObject("track", trackService.select(trackId));
 
         return mav;
     }
@@ -98,5 +101,15 @@ public class TrackController {
 
         redirectAttributes.addFlashAttribute(ConstantFields.DELETE_FAILURE_KEY, ConstantFields.DELETE_FAILURE_MESSAGE);
         return "redirect:/admin/track/routeList.action";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/selectJsonByPlaceId/{placeId}", method = RequestMethod.POST)
+    public Map<String,List<Track>> selectJsonByFauId(@PathVariable("placeId") int placeId) {
+        List<Track> jsonByPlaceId = trackService.selectJsonByFauId(placeId);
+        Map<String,List<Track>> map = new HashMap<>();
+        map.put("jsonByPlaceId", jsonByPlaceId);
+
+        return map;
     }
 }

@@ -23,10 +23,6 @@
                                 <div class="form-group">
                                     <label for="track">道</label>
                                     <select class="form-control" id="track" name="track">
-                                        <option value="0">全部</option>
-                                        <c:forEach items="${sessionScope.tracks}" var="track">
-                                            <option value="${track.trackId}">${track.trackName}</option>
-                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -61,7 +57,7 @@
                         <th>请求人</th>
                         <th>防护开始时间</th>
                         <th>防护结束时间</th>
-                        <th>备注</th>
+                        <th>预计时间</th>
                     </tr>
                     <c:forEach items="${page.content}" var="maintain" varStatus="status">
                         <tr>
@@ -111,3 +107,44 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+
+        var $placeId = $("#place").val();
+        var track = document.getElementById("track");
+        $.ajax({
+            type: 'post',
+            contentType: 'application/json',
+            dataType: 'json',
+            url: '${contextPath}/admin/track/selectJsonByPlaceId/' + $placeId + '.action',
+            success: function (result) {
+                track.options.length = 0;
+                track.options.add(new Option("全部", 0));
+                $.each(result.jsonByPlaceId, function (i, item) {
+                    track.options.add(new Option(item.trackName, item.trackId));
+                });
+            }
+        });
+
+        $("#place").on('change',function() {
+            var $placeId = $("#place").val();
+            var track = document.getElementById("track");
+            $.ajax({
+                type: 'post',
+                contentType: 'application/json',
+                dataType: 'json',
+                url: '${contextPath}/admin/track/selectJsonByPlaceId/' + $placeId + '.action',
+                success: function (result) {
+                    track.options.length = 0;
+                    track.options.add(new Option("全部", 0));
+                    $.each(result.jsonByPlaceId, function (i, item) {
+                        track.options.add(new Option(item.trackName, item.trackId));
+                    });
+                }
+            });
+        })
+    });
+</script>
+
+<%@include file="/WEB-INF/include/footer.jsp"%>

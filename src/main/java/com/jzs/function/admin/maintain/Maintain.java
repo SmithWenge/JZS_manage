@@ -59,6 +59,24 @@ public class Maintain extends Entry{
     private String dealResult;
     private String maintainName;
     private String latestTime;
+    private String faultSugestion;
+    private String diaochePass;
+
+    public String getDiaochePass() {
+        return diaochePass;
+    }
+
+    public void setDiaochePass(String diaochePass) {
+        this.diaochePass = diaochePass;
+    }
+
+    public String getFaultSugestion() {
+        return faultSugestion;
+    }
+
+    public void setFaultSugestion(String faultSugestion) {
+        this.faultSugestion = faultSugestion;
+    }
 
     public String getLatestTime() {
         return latestTime;

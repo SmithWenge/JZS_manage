@@ -11,4 +11,5 @@ public interface TrackServiceI {
     Boolean edit(Track track,String logUser);
     Boolean cancle(int trackId,String logUser);
     Track select(int trackId);
+    List<Track> selectJsonByFauId(int placeId);
 }

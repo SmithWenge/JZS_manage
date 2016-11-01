@@ -33,6 +33,10 @@ public class ConstantFields {
     public static final String MAIL_DEFAULT_USER_PASS_KEY = "mail.smtp.pass";
     public static final String MAIL_DEFAULT_STARTTLS_ENABLE_KEY = "mail.smtp.starttls.enable";
 
+    /* 调车长密码错误消息Key */
+    public static final String DIAOCHE_WRONG_KEY = "diaocheWrongMessage";
+    /* 调车长密码错误消息 */
+    public static final String DIAOCHE_WRONG_MESSAGE = "调车长密码错误";
     /* 退出登录异常key */
     public static final String EXIT_INSPECTION_KEY = "exitInspectionMessage";
     /* 退出登录异常消息 */

@@ -12,4 +12,5 @@ public interface TrackRepositoryI {
     Boolean delete(int trackId);
     Track select(int trackId);
     int selectNumOfFault(int trackId);
+    List<Track> selectJsonByFauId(int placeId);
 }

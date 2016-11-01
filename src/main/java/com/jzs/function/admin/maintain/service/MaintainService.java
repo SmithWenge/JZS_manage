@@ -154,10 +154,10 @@ public class MaintainService implements MaintainServiceI{
         maintain.setInspectionState(1);
         Boolean tmp1 = maintainRepository.insterInsp(maintain);
         Boolean tmp3 = maintainRepository.updatePlaceIns(maintain.getPlace());
-        Boolean tmp2 = maintainRepository.updatePlacePro(maintain.getPlace());
+        //Boolean tmp2 = maintainRepository.updatePlacePro(maintain.getPlace());
         List<Maintain> list = maintainRepository.selectInspTracks(maintain.getPlace());
 
-        if (tmp1 && tmp2 && tmp3) {
+        if (tmp1 && tmp3) {
             LogContent logContent = new LogContent(logUser, "添加巡检的场次为" + placeRepository.select(maintain.getPlace()).getPlaceName(), 1, 3);
             logRepository.insertLog(logContent);
 
@@ -176,32 +176,32 @@ public class MaintainService implements MaintainServiceI{
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = BatchRollbackException.class)
     @Override
     public Boolean inspectionStop(Maintain maintain,String logUser) throws BatchRollbackException{
-        List<Maintain> list = maintainRepository.selectStopInspTracks(maintain.getPlace());
-        Maintain stopMaintain = new Maintain();
-        stopMaintain.setProtectState(2);
-        Maintain inspection = maintainRepository.selectInspectionById(maintain.getInspectionId());
+//        List<Maintain> list = maintainRepository.selectStopInspTracks(maintain.getPlace());
+//        Maintain stopMaintain = new Maintain();
+//        stopMaintain.setProtectState(2);
+//        Maintain inspection = maintainRepository.selectInspectionById(maintain.getInspectionId());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        stopMaintain.setProtectStopTime(sdf.format(new Date()));
+//        stopMaintain.setProtectStopTime(sdf.format(new Date()));
         maintain.setInspectionStopTime(sdf.format(new Date()));
-        stopMaintain.setProtectPeople("巡检防护未记录");
-        stopMaintain.setProtectRemark("无");
-        stopMaintain.setProtectApproveTime(inspection.getInspectionTime());
-        stopMaintain.setProtectApprovePeople(inspection.getProtectApprovePeople());
-        stopMaintain.setProtectRequestPeople(inspection.getProtectRequestPeople());
-        stopMaintain.setPlace(inspection.getPlace());
-        stopMaintain.setNewDate(inspection.getNewDate());
-        for (Maintain forMaintain : list) {
-            stopMaintain.setTrack(forMaintain.getTrack());
-            maintainRepository.inspectionAddPro(stopMaintain);
-            LogContent logContent = new LogContent(logUser, "添加防护" + "巡检防护" + " " + forMaintain.getTrackName(), 1, 3);
-            logRepository.insertLog(logContent);
-        }
+//        stopMaintain.setProtectPeople("巡检防护未记录");
+//        stopMaintain.setProtectRemark("无");
+//        stopMaintain.setProtectApproveTime(inspection.getInspectionTime());
+//        stopMaintain.setProtectApprovePeople(inspection.getProtectApprovePeople());
+//        stopMaintain.setProtectRequestPeople(inspection.getProtectRequestPeople());
+//        stopMaintain.setPlace(inspection.getPlace());
+//        stopMaintain.setNewDate(inspection.getNewDate());
+//        for (Maintain forMaintain : list) {
+//            stopMaintain.setTrack(forMaintain.getTrack());
+//            maintainRepository.inspectionAddPro(stopMaintain);
+//            LogContent logContent = new LogContent(logUser, "添加防护" + "巡检防护" + " " + forMaintain.getTrackName(), 1, 3);
+//            logRepository.insertLog(logContent);
+//        }
 
         Boolean tmp1 = maintainRepository.updateInspStop(maintain);
         Boolean tmp2 = maintainRepository.updatePlaceInsStop(maintain);
-        Boolean tmp3 = maintainRepository.updateTracksStop(maintain);
+//        Boolean tmp3 = maintainRepository.updateTracksStop(maintain);
 
-        if (tmp1 && tmp2 && tmp3) {
+        if (tmp1 && tmp2) {
             LogContent logContent = new LogContent(logUser, "结束巡检的场次为" + placeRepository.select(maintain.getPlace()).getPlaceName(), 1, 4);
             logRepository.insertLog(logContent);
 

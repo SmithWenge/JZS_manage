@@ -43,7 +43,8 @@
     /*height: 45px;*/
     line-height: 45px;
     border-bottom: solid 1px white;
-    text-align: center;
+    text-align: left;
+    margin-right: -45px;
   }
 
   /*.nav_main .managerInfo{*/
@@ -55,6 +56,7 @@
     height: 45px;
     width: 200px;
     display: inline-block;
+    padding-left: 45px;
   }
   .nav_main .managerInfo{
     padding-left: 0;
@@ -62,8 +64,9 @@
 .nav_main .managerInfo li a{
   padding-left: 0%;
   /*border-left: 45px #f3f3f3 solid;*/
-  margin-left: 45px;
-  width: 155px;
+  padding-left: 85px;
+  width: 200px;
+  text-align: left;
   ;
 }
   .nav_main li a:hover {

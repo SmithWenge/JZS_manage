@@ -11,11 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("admin/faultType")
@@ -99,5 +102,15 @@ public class FaultTypeController {
 
         redirectAttributes.addFlashAttribute(ConstantFields.DELETE_FAILURE_KEY, ConstantFields.DELETE_FAILURE_MESSAGE);
         return "redirect:/admin/faultType/routeList.action";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/selectByFaultTypeId/{faultTypeId}", method = RequestMethod.POST)
+    public Map<String,FaultType> selectByFaultTypeId(@PathVariable("faultTypeId") int faultTypeId) {
+        FaultType jsonByFauTyId = faultTypeService.select(faultTypeId);
+        Map<String,FaultType> map = new HashMap<>();
+        map.put("jsonByFauTyId", jsonByFauTyId);
+
+        return map;
     }
 }

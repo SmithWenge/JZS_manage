@@ -92,6 +92,20 @@ public class TrackRepository implements TrackRepositoryI{
         return jdbcTemplate.queryForObject(sql,args,Integer.class);
     }
 
+    @Override
+    public List<Track> selectJsonByFauId(int placeId) {
+        String sql = "SELECT trackId,T.placeId,placeName,trackName,trackState,trackLength,carNumEle,carNumFou,useable FROM jzs_track AS T LEFT JOIN jzs_place as P ON T.placeId = P.placeId WHERE T.deleteFlag = 0 AND P.deleteFlag = 0 AND T.placeId = ? ORDER BY trackId ASC";
+        Object[] args = {
+                placeId
+        };
+
+        try {
+            return jdbcTemplate.query(sql,args, new ListRowMapper());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private class ListRowMapper implements RowMapper{
 
         @Override

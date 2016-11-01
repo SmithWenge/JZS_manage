@@ -1,10 +1,13 @@
 package com.jzs.function.admin.maintain.controller;
 
+import com.google.common.base.Optional;
 import com.jzs.arc.exception.BatchRollbackException;
 import com.jzs.arc.utils.ConstantFields;
+import com.jzs.arc.utils.PasswordUtils;
 import com.jzs.function.admin.faultType.FaultType;
 import com.jzs.function.admin.faultType.service.FaultTypeServiceI;
 import com.jzs.function.admin.login.AdminUser;
+import com.jzs.function.admin.login.service.AdminLoginServiceI;
 import com.jzs.function.admin.maintain.Maintain;
 import com.jzs.function.admin.maintain.service.MaintainServiceI;
 import com.jzs.function.admin.track.Track;
@@ -39,6 +42,8 @@ public class MaintainController {
     private TrackRepositoryI trackRepository;
     @Autowired
     private FaultTypeServiceI faultTypeService;
+    @Autowired
+    private AdminLoginServiceI adminLoginService;
 
     @RequestMapping(value = "maintainCheck/{faultRegisterId}",method = RequestMethod.GET)
     public ModelAndView routeMaintainCheck(@PathVariable("faultRegisterId") int faultRegisterId) {
@@ -158,19 +163,29 @@ public class MaintainController {
     public String maintainProtectAdd(Maintain maintain, HttpSession session, RedirectAttributes redirectAttributes) throws BatchRollbackException {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
         String logUser = user.getUserName();
-        int tmp = maintainService.protectAdd(maintain, logUser);
 
-        if (0 == tmp) {
-            if (LOG.isInfoEnabled())
-                LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser, "maintainProtect");
+        AdminUser adminUser = new AdminUser();
+        adminUser.setUserLoginName(adminLoginService.selectNowDiaocheUserName().getUserLoginName());
+        adminUser.setUserLoginPass(PasswordUtils.encrypt(maintain.getDiaochePass()));
+        AdminUser diaoche = adminLoginService.selectUnique(adminUser);
+        Optional<AdminUser> optional = Optional.fromNullable(diaoche);
+        if (optional.isPresent()) {
+            int tmp = maintainService.protectAdd(maintain, logUser);
+            if (0 == tmp) {
+                if (LOG.isInfoEnabled())
+                    LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser, "maintainProtect");
 
-            redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_SUCCESS_KEY, ConstantFields.PROTECT_SUCCESS_MESSAGE);
-            return "redirect:/admin/maintain/routeMaintainIndex.action";
-        }if (2 == tmp) {
-            redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_REPEAT_KEY, ConstantFields.PROTECT_REPEAT_MESSAGE);
-            return "redirect:/admin/maintain/routeMaintainIndex.action";
-        }else {
-            redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_FAILURE_KEY, ConstantFields.PROTECT_FAILURE_MESSAGE);
+                redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_SUCCESS_KEY, ConstantFields.PROTECT_SUCCESS_MESSAGE);
+                return "redirect:/admin/maintain/routeMaintainIndex.action";
+            }if (2 == tmp) {
+                redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_REPEAT_KEY, ConstantFields.PROTECT_REPEAT_MESSAGE);
+                return "redirect:/admin/maintain/routeMaintainIndex.action";
+            }else {
+                redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_FAILURE_KEY, ConstantFields.PROTECT_FAILURE_MESSAGE);
+                return "redirect:/admin/maintain/routeMaintainIndex.action";
+            }
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.DIAOCHE_WRONG_KEY, ConstantFields.DIAOCHE_WRONG_MESSAGE);
             return "redirect:/admin/maintain/routeMaintainIndex.action";
         }
     }
@@ -179,19 +194,29 @@ public class MaintainController {
     public String protectAdd(Maintain maintain, HttpSession session, RedirectAttributes redirectAttributes) throws BatchRollbackException {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
         String logUser = user.getUserName();
-        int tmp = maintainService.protectAdd(maintain, logUser);
 
-        if (0 == tmp) {
-            if (LOG.isInfoEnabled())
-                LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser,"maintainProtect");
+        AdminUser adminUser = new AdminUser();
+        adminUser.setUserLoginName(adminLoginService.selectNowDiaocheUserName().getUserLoginName());
+        adminUser.setUserLoginPass(PasswordUtils.encrypt(maintain.getDiaochePass()));
+        AdminUser diaoche = adminLoginService.selectUnique(adminUser);
+        Optional<AdminUser> optional = Optional.fromNullable(diaoche);
+        if (optional.isPresent()) {
+            int tmp = maintainService.protectAdd(maintain, logUser);
+            if (0 == tmp) {
+                if (LOG.isInfoEnabled())
+                    LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser,"maintainProtect");
 
-            redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_SUCCESS_KEY, ConstantFields.PROTECT_SUCCESS_MESSAGE);
-            return "redirect:/admin/maintain/routeIndex.action";
-        }if (2 == tmp) {
-            redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_REPEAT_KEY, ConstantFields.PROTECT_REPEAT_MESSAGE);
-            return "redirect:/admin/maintain/routeIndex.action";
-        }else {
-            redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_FAILURE_KEY, ConstantFields.PROTECT_FAILURE_MESSAGE);
+                redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_SUCCESS_KEY, ConstantFields.PROTECT_SUCCESS_MESSAGE);
+                return "redirect:/admin/maintain/routeIndex.action";
+            }if (2 == tmp) {
+                redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_REPEAT_KEY, ConstantFields.PROTECT_REPEAT_MESSAGE);
+                return "redirect:/admin/maintain/routeIndex.action";
+            }else {
+                redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_FAILURE_KEY, ConstantFields.PROTECT_FAILURE_MESSAGE);
+                return "redirect:/admin/maintain/routeIndex.action";
+            }
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.DIAOCHE_WRONG_KEY, ConstantFields.DIAOCHE_WRONG_MESSAGE);
             return "redirect:/admin/maintain/routeIndex.action";
         }
     }
@@ -200,7 +225,6 @@ public class MaintainController {
     public String reMaintainAdd(Maintain maintain, HttpSession session, RedirectAttributes redirectAttributes) throws BatchRollbackException {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
         String logUser = user.getUserName();
-
         String faultFindPeopleText = maintain.getFaultFindPeopleText();
         if (faultFindPeopleText != null && !faultFindPeopleText.equals("")) {
             maintain.setFaultFindPeople(faultFindPeopleText);
@@ -224,12 +248,12 @@ public class MaintainController {
 
     @RequestMapping(value = "/maintainAdd", method = RequestMethod.POST)
     public String maintainAdd(Maintain maintain, HttpSession session, RedirectAttributes redirectAttributes) throws BatchRollbackException {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        String logUser = user.getUserName();
         String faultFindPeopleText = maintain.getFaultFindPeopleText();
         if (faultFindPeopleText != null && !faultFindPeopleText.equals("")) {
             maintain.setFaultFindPeople(faultFindPeopleText);
         }
-        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
-        String logUser = user.getUserName();
         if (maintainService.selectExitMaintain(maintain)) {
             if (maintainService.maintainAdd(maintain, logUser)) {
                 if (LOG.isInfoEnabled())

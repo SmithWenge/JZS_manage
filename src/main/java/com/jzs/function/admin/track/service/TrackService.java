@@ -64,4 +64,9 @@ public class TrackService implements TrackServiceI{
     public Track select(int trackId) {
         return trackRepository.select(trackId);
     }
+
+    @Override
+    public List<Track> selectJsonByFauId(int placeId) {
+        return trackRepository.selectJsonByFauId(placeId);
+    }
 }

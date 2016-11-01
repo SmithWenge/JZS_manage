@@ -94,7 +94,11 @@
         <p class="bg-success">${maintainRepeatMessage}</p>
       </div>
     </c:if>
-
+    <c:if test="${not empty diaocheWrongMessage}">
+      <div class="col-md-12" id="message">
+        <p class="bg-success">${diaocheWrongMessage}</p>
+      </div>
+    </c:if>
     <div class="row" style="margin-top: 5px;">
       <div class="col-md-12">
         <table class="table" id="paginationTable" align="center">
@@ -173,7 +177,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="zhibanPeo" class="col-sm-3 control-label">驼峰值班员</label>
+            <label for="zhibanPeo" class="col-sm-3 control-label">驻站联络员</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" id="zhibanPeo" name="zhibanPeo" value="${protectRequestPeople.userName}">
             </div>
@@ -204,26 +208,20 @@
           <input type="hidden" name="track" id="proRegTrackId">
           <input type="hidden" name="place" id="proRegPlaceId">
           <div class="form-group">
-            <label for="proRegPlaceName" class="col-sm-2 control-label">场</label>
-            <div class="col-sm-10">
+            <label for="proRegPlaceName" class="col-sm-3 control-label">场</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="proRegPlaceName" name="placeName" readonly>
             </div>
           </div>
           <div class="form-group">
-            <label for="proRegTrackName" class="col-sm-2 control-label">股道</label>
-            <div class="col-sm-10">
+            <label for="proRegTrackName" class="col-sm-3 control-label">股道</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="proRegTrackName" name="trackName" readonly>
             </div>
           </div>
           <div class="form-group">
-            <label for="protectApprovePeople" class="col-sm-2 control-label">批准人</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="protectApprovePeople" name="protectApprovePeople" value="${protectApprovePeople.userName}">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="protectPeople" class="col-sm-2 control-label">防护人</label>
-            <div class="col-sm-10">
+            <label for="protectPeople" class="col-sm-3 control-label">防护人</label>
+            <div class="col-sm-9">
               <select class="form-control" id="protectPeople" name="protectPeople">
                 <c:forEach items="${workers}" var="worker">
                   <option value="${worker.userName}">${worker.userName}</option>
@@ -232,22 +230,34 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="protectRequestPeople" class="col-sm-2 control-label">请求人</label>
-            <div class="col-sm-10">
+            <label for="protectRequestPeople" class="col-sm-3 control-label">请求人</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="protectRequestPeople" name="protectRequestPeople" value="${protectRequestPeople.userName}">
             </div>
           </div>
           <div class="form-group">
-            <label for="protectRemark" class="col-sm-2 control-label">备注</label>
-            <div class="col-sm-10">
+            <label for="protectApprovePeople" class="col-sm-3 control-label">批准人</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="protectApprovePeople" name="protectApprovePeople" value="${protectApprovePeople.userName}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="protectRemark" class="col-sm-3 control-label"><h5 style="color: #AA0000"><b>预计时间</b></h5></label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="protectRemark" name="protectRemark">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="diaochePass" class="col-sm-3 control-label"><h5 style="color: #AA0000"><b>调车长确认密码</b></h5></label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="diaochePass" name="diaochePass">
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-2">
               <button type="submit" class="btn btn-default">提交</button>
             </div>
-            <div class="col-sm-offset-1 col-sm-6">
+            <div class="col-sm-offset-1 col-sm-4">
               <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
           </div>
@@ -267,22 +277,22 @@
       <div class="modal-body">
         <form class="form-horizontal" action="${contextPath}/admin/maintain/maintainAdd.action" method="post" id="faultForm">
           <div class="form-group">
-            <label for="fauRegPlaceName" class="col-sm-2 control-label">场</label>
-            <div class="col-sm-10">
+            <label for="fauRegPlaceName" class="col-sm-3 control-label">场</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="fauRegPlaceName" name="placeName" readonly>
             </div>
           </div>
           <div class="form-group">
-            <label for="fauRegTrackName" class="col-sm-2 control-label">股道</label>
-            <div class="col-sm-10">
+            <label for="fauRegTrackName" class="col-sm-3 control-label">股道</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="fauRegTrackName" name="trackName" readonly>
             </div>
           </div>
           <input type="hidden" name="place" id="fauRegPlaceId">
           <input type="hidden" name="track" id="fauRegTrackId">
           <div class="form-group">
-            <label for="region" class="col-sm-2 control-label">区</label>
-            <div class="col-sm-10">
+            <label for="region" class="col-sm-3 control-label">区</label>
+            <div class="col-sm-9">
               <select class="form-control" id="region" name="region">
                 <c:forEach items="${sessionScope.regions}" var="region">
                   <option value="${region.regionId}">${region.regionName}</option>
@@ -291,15 +301,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="seat" class="col-sm-2 control-label">位置</label>
-            <div class="col-sm-10">
+            <label for="seat" class="col-sm-3 control-label">位置</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="seat" name="seat" placeholder="001">
             </div>
           </div>
           <div class="form-group">
-            <label for="faultType" class="col-sm-2 control-label">故障类型</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="faultType" name="faultType">
+            <label for="faultTypeId" class="col-sm-3 control-label">故障类型</label>
+            <div class="col-sm-9">
+              <select class="form-control" id="faultTypeId" name="faultType">
                 <c:forEach items="${faultTypes}" var="faultType">
                   <option value="${faultType.faultTypeId}">${faultType.faultTypeName}</option>
                 </c:forEach>
@@ -307,8 +317,8 @@
             </div>
           </div>
           <div class="form-group" id="findPeople">
-            <label for="faultFindPeople" class="col-sm-2 control-label">发现人</label>
-            <div class="col-sm-10">
+            <label for="faultFindPeople" class="col-sm-3 control-label">发现人</label>
+            <div class="col-sm-9">
               <select class="form-control" id="faultFindPeople" name="faultFindPeople">
                 <c:forEach items="${workers}" var="worker">
                   <option value="${worker.userName}" selected>${worker.userName}</option>
@@ -318,15 +328,21 @@
             </div>
           </div>
           <div class="form-group" id="findPeopleText">
-            <label for="faultFindPeopleText" class="col-sm-2 control-label">发现人</label>
-            <div class="col-sm-10">
+            <label for="faultFindPeopleText" class="col-sm-3 control-label">发现人</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="faultFindPeopleText" name="faultFindPeopleText" placeholder="请输入发现人姓名">
             </div>
           </div>
           <div class="form-group">
-            <label for="faultRegisterPeople" class="col-sm-2 control-label">记录人</label>
-            <div class="col-sm-10">
+            <label for="faultRegisterPeople" class="col-sm-3 control-label">记录人</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="faultRegisterPeople" name="faultRegisterPeople" value="${protectRequestPeople.userName}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="faultSugestion" class="col-sm-3 control-label">建议处理办法</label>
+            <div class="col-sm-9">
+              <textarea class="form-control" id="faultSugestion" name="faultSugestion" readonly></textarea>
             </div>
           </div>
           <div class="form-group">
@@ -400,6 +416,20 @@
     // 设置table表格中的行高
     var $height = $('#paginationTable td').height() + 'px';
     $('#paginationTable td').css('line-height', $height);
+    //建议处理办法
+    $("#faultTypeId").on('change',function() {
+      var $value = $("#faultTypeId").val();
+      $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        dataType: 'json',
+        url: '${contextPath}/admin/faultType/selectByFaultTypeId/' + $value + '.action',
+        success: function (result) {
+          var $faultTypeJson = result.jsonByFauTyId;
+          document.getElementById("faultSugestion").value=$faultTypeJson.faultSugestion;
+        }
+      });
+    });
 
     document.getElementById('findPeopleText').style.display = "none";
     $("#faultFindPeople").on('change',function() {
@@ -428,6 +458,17 @@
           document.getElementById("proRegTrackName").value=device.trackName;
           document.getElementById("proRegTrackId").value=device.track;
           document.getElementById("proRegPlaceId").value=device.place;
+        }
+      });
+      var $value = $("#faultTypeId").val();
+      $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        dataType: 'json',
+        url: '${contextPath}/admin/faultType/selectByFaultTypeId/' + $value + '.action',
+        success: function (result) {
+          var $faultTypeJson = result.jsonByFauTyId;
+          document.getElementById("faultSugestion").value=$faultTypeJson.faultSugestion;
         }
       });
     });

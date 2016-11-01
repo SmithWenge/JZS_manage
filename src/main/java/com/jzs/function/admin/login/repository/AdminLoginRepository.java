@@ -43,6 +43,24 @@ public class AdminLoginRepository implements AdminLoginRepositoryI {
         return jdbcTemplate.update(sql, args) == 1 ? true : false;
     }
 
+    @Override
+    public AdminUser selectNowDiaocheUserName() {
+        String sql = "SELECT I.userLoginName FROM jzs_temattendance AS T LEFT JOIN jzs_userinfo AS I ON T.userId = I.userId LEFT JOIN jzs_user AS U ON T.userId = U.userId WHERE U.userPost = 3";
+
+        return jdbcTemplate.queryForObject(sql,new SelectNowDiaocheUserNameRowMapper());
+    }
+
+    private class SelectNowDiaocheUserNameRowMapper implements RowMapper<AdminUser> {
+
+        @Override
+        public AdminUser mapRow(ResultSet resultSet, int i) throws SQLException {
+            AdminUser adminUser = new AdminUser();
+            adminUser.setUserLoginName(resultSet.getString("userLoginName"));
+
+            return adminUser;
+        }
+    }
+
     private class SelectUniqueRowMapper implements RowMapper<AdminUser> {
 
         @Override

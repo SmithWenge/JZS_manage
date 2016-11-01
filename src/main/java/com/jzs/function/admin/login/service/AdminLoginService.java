@@ -52,4 +52,14 @@ public class AdminLoginService implements AdminLoginServiceI {
 
         return null;
     }
+
+    @Override
+    public AdminUser selectUnique(AdminUser adminUser) {
+        return adminLoginRepository.selectUnique(adminUser);
+    }
+
+    @Override
+    public AdminUser selectNowDiaocheUserName() {
+        return adminLoginRepository.selectNowDiaocheUserName();
+    }
 }

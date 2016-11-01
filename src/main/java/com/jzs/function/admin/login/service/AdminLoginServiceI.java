@@ -5,4 +5,6 @@ import com.jzs.function.admin.login.AdminUser;
 public interface AdminLoginServiceI {
     AdminUser login(AdminUser adminUser);
     AdminUser resetPassword(AdminUser adminUser,String logUser);
+    AdminUser selectUnique(AdminUser adminUser);
+    AdminUser selectNowDiaocheUserName();
 }
