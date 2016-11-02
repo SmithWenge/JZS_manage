@@ -83,8 +83,12 @@ public class MaintainService implements MaintainServiceI{
     public boolean updateMaintain(Maintain maintain, String logUser) throws BatchRollbackException{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         maintain.setPinTime(sdf.format(new Date()));
+        Boolean tmp2 = true;
+        if (maintain.getRegion() != 4) {
+            tmp2 = maintainRepository.updateDevice(maintain,1);
+        }
         Boolean tmp1 = maintainRepository.updateMaintain(maintain);
-        Boolean tmp2 = maintainRepository.updateDevice(maintain,1);
+
         if (tmp1 && tmp2) {
             LogContent logContent = new LogContent(logUser, "故障销记" + maintain.getFaultRegisterId(), 1, 4);
             logRepository.insertLog(logContent);
@@ -102,8 +106,13 @@ public class MaintainService implements MaintainServiceI{
         SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy-MM-dd");
         maintain.setNewDate(sdfTwo.format(new Date()));
         maintain.setFaultState(2);
+        Boolean tmp2 = true;
+        if (maintain.getRegion() == 4) {
+            maintain.setSeat("整线");
+        } else {
+            tmp2 = maintainRepository.updateDevice(maintain,3);
+        }
         Boolean tmp1 = maintainRepository.maintainAdd(maintain);
-        Boolean tmp2 = maintainRepository.updateDevice(maintain,3);
         if (tmp1 && tmp2) {
             LogContent logContent = new LogContent(logUser, "添加故障维护", 1, 3);
             logRepository.insertLog(logContent);

@@ -35,6 +35,7 @@
                                     <c:forEach items="${sessionScope.regions}" var="region">
                                         <option value="${region.regionId}">${region.regionName}</option>
                                     </c:forEach>
+                                    <option value="4">整线</option>
                                 </select>
                             </div>
                             <div class="form-group">

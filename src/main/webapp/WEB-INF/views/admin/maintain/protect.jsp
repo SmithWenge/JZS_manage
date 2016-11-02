@@ -297,10 +297,11 @@
                 <c:forEach items="${sessionScope.regions}" var="region">
                   <option value="${region.regionId}">${region.regionName}</option>
                 </c:forEach>
+                <option value="4">整线</option>
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="seatId">
             <label for="seat" class="col-sm-3 control-label">位置</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" id="seat" name="seat" placeholder="001">
@@ -429,6 +430,16 @@
           document.getElementById("faultSugestion").value=$faultTypeJson.faultSugestion;
         }
       });
+    });
+
+    //整线登记故障
+    $("#region").on('change',function() {
+      var $value = $("#region").val();
+      if($value == 4) {
+        document.getElementById('seatId').style.display = "none";
+      }else {
+        document.getElementById('seatId').style.display = "";
+      }
     });
 
     document.getElementById('findPeopleText').style.display = "none";
