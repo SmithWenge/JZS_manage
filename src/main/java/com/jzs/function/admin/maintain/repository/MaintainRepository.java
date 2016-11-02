@@ -141,8 +141,9 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public Boolean updateMaintain(Maintain maintain) {
-        String sql = "UPDATE jzs_faultregister SET faultState = 1,pinTime = ?,faultReason = ?,dealResult = ? WHERE faultRegisterId = ?";
+        String sql = "UPDATE jzs_faultregister SET faultState = 1,faultDealPeople = ?,pinTime = ?,faultReason = ?,dealResult = ? WHERE faultRegisterId = ?";
         Object[] args = {
+                maintain.getFaultDealPeople(),
                 maintain.getPinTime(),
                 maintain.getFaultReason(),
                 maintain.getDealResult(),
