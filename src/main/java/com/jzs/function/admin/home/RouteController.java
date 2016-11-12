@@ -37,6 +37,7 @@ public class RouteController {
         mav.addObject(ConstantFields.PAGE_KEY, page);
         mav.addObject("num",maintainService.selectFaultNum());
         mav.addObject("waringNum",deviceService.selectNumOfWarning());
+        mav.addObject("protectRequestPeople",maintainService.selectProtectRequestPeople());
         int state = maintainService.getInspectionState();
         mav.addObject("state", state);
 

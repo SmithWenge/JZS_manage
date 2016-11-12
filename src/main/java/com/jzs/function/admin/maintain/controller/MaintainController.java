@@ -47,7 +47,6 @@ public class MaintainController {
 
     @RequestMapping(value = "maintainCheck/{faultRegisterId}",method = RequestMethod.GET)
     public ModelAndView routeMaintainCheck(@PathVariable("faultRegisterId") int faultRegisterId) {
-
         ModelAndView mav = new ModelAndView("admin/maintain/maintainCheck");
         mav.addObject("maintain",maintainService.selectMaintainById(faultRegisterId));
 

@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="zhibanPeo" class="col-sm-3 control-label">驼峰值班员</label>
+                        <label for="zhibanPeo" class="col-sm-3 control-label">驻站联络员</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="zhibanPeo" name="zhibanPeo" value="${protectRequestPeople.userName}">
                         </div>
