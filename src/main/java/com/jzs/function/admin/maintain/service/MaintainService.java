@@ -66,8 +66,9 @@ public class MaintainService implements MaintainServiceI{
                 LogContent logContent = new LogContent(logUser, "添加防护", 1, 3);
                 logRepository.insertLog(logContent);
                 return 0;
+            }else {
+                throw new BatchRollbackException();
             }
-            return 1;
         } else {
             return 2;
         }
@@ -92,6 +93,8 @@ public class MaintainService implements MaintainServiceI{
         if (tmp1 && tmp2) {
             LogContent logContent = new LogContent(logUser, "故障销记" + maintain.getFaultRegisterId(), 1, 4);
             logRepository.insertLog(logContent);
+        } else {
+            throw new BatchRollbackException();
         }
 
         return tmp1 && tmp2;
@@ -116,6 +119,8 @@ public class MaintainService implements MaintainServiceI{
         if (tmp1 && tmp2) {
             LogContent logContent = new LogContent(logUser, "添加故障维护", 1, 3);
             logRepository.insertLog(logContent);
+        } else {
+            throw new BatchRollbackException();
         }
 
         return tmp1 && tmp2;
@@ -172,8 +177,7 @@ public class MaintainService implements MaintainServiceI{
 
             return list;
         } else {
-
-            return null;
+            throw new BatchRollbackException();
         }
     }
 
@@ -215,7 +219,6 @@ public class MaintainService implements MaintainServiceI{
             logRepository.insertLog(logContent);
 
         } else {
-
             throw new BatchRollbackException();
         }
 
