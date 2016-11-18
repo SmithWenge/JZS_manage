@@ -61,6 +61,24 @@ public class Maintain extends Entry{
     private String latestTime;
     private String faultSugestion;
     private String diaochePass;
+    private String expectTime;
+    private String dealTime;
+
+    public String getDealTime() {
+        return dealTime;
+    }
+
+    public void setDealTime(String dealTime) {
+        this.dealTime = dealTime;
+    }
+
+    public String getExpectTime() {
+        return expectTime;
+    }
+
+    public void setExpectTime(String expectTime) {
+        this.expectTime = expectTime;
+    }
 
     public String getDiaochePass() {
         return diaochePass;

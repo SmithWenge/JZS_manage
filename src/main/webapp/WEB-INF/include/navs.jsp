@@ -73,11 +73,16 @@
     background: #C7E0F4;
     font-weight: 900;
   }
+  .header img{
+    width: 25px;
+    height: 25px;
+    margin: 0 8px 0 0px;
+  }
 </style>
 
 <div class="header">
   <ul>
-    <li style="width: 55%;">&nbsp;&nbsp;&nbsp;&nbsp;金州站减速顶管理系统</li>
+    <li style="width: 55%; font-size: 15px">&nbsp;&nbsp;&nbsp;&nbsp;<img src="${contextPath}/static/images/tielu.png">金州站减速顶管理系统</li>
     <li style="width: 20%;" id="clock"></li>
     <li style="width: 7%;"> <span class="glyphicon glyphicon-user"> </span> ${sessionScope.adminLogin.userName}</li>
     <li style="width: 8%;"><a href="${contextPath}/admin/routePass.action">更改密码</a></li>
@@ -137,6 +142,7 @@
         </li>
       </c:if>
     </c:forEach>
+    <li role="presentation" class="active"><a id="aboutUs" href="${contextPath}/admin/home/aboutUs.action">关于我们</a></li>
   </ul>
 </div>
 

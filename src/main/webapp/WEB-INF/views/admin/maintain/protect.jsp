@@ -109,6 +109,7 @@
             <th>股道状态</th>
             <th>故障顶数量</th>
             <th>操作</th>
+            <th>预计时间倒计时</th>
           </tr>
           <c:forEach items="${inspections}" var="maintain" varStatus="status">
             <tr>
@@ -143,6 +144,12 @@
                 </c:if>
               </c:forEach>
               </td>
+              <c:if test="${maintain.trackState == 2}">
+                <td class="timeRecord" >${maintain.dealTime}</td>
+              </c:if>
+              <c:if test="${maintain.trackState == 1}">
+                <td>未开始防护</td>
+              </c:if>
             </tr>
           </c:forEach>
         </table>
@@ -242,7 +249,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="protectRemark" class="col-sm-3 control-label"><h5 style="color: #AA0000"><b>预计时间</b></h5></label>
+            <label for="protectRemark" class="col-sm-3 control-label"><h5 style="color: #AA0000"><b>预计时间（分钟）</b></h5></label>
             <div class="col-sm-9">
               <input type="text" class="form-control" id="protectRemark" name="protectRemark">
             </div>
@@ -527,7 +534,52 @@
           document.getElementById("faultRegisterPeopleTwo").value=RegisterPeople.faultRegisterPeople;
         }
       });
-    })
+    });
+
+    // 防护倒计时
+    $.each($(".timeRecord"), function() {
+      var maxtime = 0;
+
+      if($(this).html() <= 0) {
+        $(this).css('color', 'red');
+      }
+      if ($(this).html() != null && $(this).html() > 0) {
+        maxtime = $(this).html();
+      }
+
+      if (maxtime == NaN) {
+        return;
+      }
+
+      var content = $(this);
+
+      setInterval(function countDown() {
+        if(maxtime >=0 ) {
+          minutes = Math.floor(maxtime/60);
+          seconds = Math.floor(maxtime%60);
+          msg ="距离结束还有 "+minutes+" 分 "+seconds+" 秒";
+          content.html(msg);
+          --maxtime;
+          if(maxtime <= 5*60) {
+            content.css('color', 'red');
+          }
+        }
+      },1000);
+    });
+
+    //整数验证
+    $('#portectFrom').validate({
+      rules: {
+        protectRemark: {
+          digits:true
+        }
+      },
+      messages: {
+        protectRemark: {
+          digits:"请输入整数！"
+        }
+      }
+    });
   });
 </script>
 

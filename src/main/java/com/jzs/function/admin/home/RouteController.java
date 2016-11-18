@@ -43,4 +43,9 @@ public class RouteController {
 
         return mav;
     }
+
+    @RequestMapping("/aboutUs")
+    public String aboutUs() {
+        return "admin/home/aboutUs";
+    }
 }

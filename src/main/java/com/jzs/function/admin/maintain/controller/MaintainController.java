@@ -205,6 +205,8 @@ public class MaintainController {
                 if (LOG.isInfoEnabled())
                     LOG.info("[MANAGE] [OK] {} add new protection {}.", logUser,"maintainProtect");
 
+                // 记录防护时间
+//                session.setAttribute(String.valueOf(maintain.getTrack()), maintain.getProtectRemark());
                 redirectAttributes.addFlashAttribute(ConstantFields.PROTECT_SUCCESS_KEY, ConstantFields.PROTECT_SUCCESS_MESSAGE);
                 return "redirect:/admin/maintain/routeIndex.action";
             }if (2 == tmp) {

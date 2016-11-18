@@ -57,7 +57,7 @@
                         <th>请求人</th>
                         <th>防护开始时间</th>
                         <th>防护结束时间</th>
-                        <th>预计时间</th>
+                        <th>预计时间（分钟）</th>
                     </tr>
                     <c:forEach items="${page.content}" var="maintain" varStatus="status">
                         <tr>

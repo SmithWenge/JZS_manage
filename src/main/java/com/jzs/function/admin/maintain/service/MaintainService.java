@@ -58,10 +58,11 @@ public class MaintainService implements MaintainServiceI{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         maintain.setProtectApproveTime(sdf.format(new Date()));
         maintain.setProtectDay(new Date());
+        int min = Integer.valueOf(maintain.getProtectRemark());
+        maintain.setExpectTime(sdf.format(new Date(new Date().getTime() + min * 60 * 1000)));
         if(!maintainRepository.selectDiff(maintain)) {
             Boolean tmp1 = maintainRepository.protectAdd(maintain);
-            Boolean tmp2 = maintainRepository.updateTrack(maintain,2);
-
+            Boolean tmp2 = maintainRepository.updateTrack(maintain, 2);
             if (tmp1 && tmp2) {
                 LogContent logContent = new LogContent(logUser, "添加防护", 1, 3);
                 logRepository.insertLog(logContent);
@@ -237,7 +238,7 @@ public class MaintainService implements MaintainServiceI{
 
     @Override
     public Boolean insCancleProtect(Maintain maintain,String logUser) {
-        if (maintainRepository.updateTrack(maintain, 1)) {
+        if (maintainRepository.updateTrackStop(maintain)) {
             Maintain tmp = maintainRepository.selectProtectId(maintain);
             Optional<Maintain> optional = Optional.fromNullable(tmp);
 

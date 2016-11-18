@@ -44,14 +44,19 @@
         #forget{
             margin-top: 10px;
         }
+        .right_div{
+            border-shadow: 5px #A0A0A0;
+            /*border: 2px #fff solid;*/
+        }
     </style>
 </head>
 
 
 <body>
 <form action="${contextPath}/admin/login.action" method="post" id="adminLoginForm">
-    <div class="content">
+    <div class="content"  style="border: 2px solid #A0A0A0;background: #eee">
         <div class="right_div">
+            <H3 style="text-align: center;margin: 0px 0 16px 0;padding: 10px 0;border-bottom: 1px solid #444">用户登录</H3>
             <label for="inputAdminLoginName"><span class="glyphicon glyphicon-user"></span><span>&nbsp;</span><span>&nbsp;</span></label>
             <input type="text" id="inputAdminLoginName" name="userLoginName" placeholder="admin" /><br />
             <label for="inputAdminLoginPass"><span class="glyphicon glyphicon-lock"></span><span>&nbsp;</span><span>&nbsp;</span></label>

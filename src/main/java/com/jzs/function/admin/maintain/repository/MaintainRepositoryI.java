@@ -39,6 +39,7 @@ public interface MaintainRepositoryI {
     Boolean updateInspStop(Maintain maintain);
     Boolean updatePlaceInsStop(Maintain maintain);
     Boolean updateTracksStop(Maintain maintain);
+    Boolean updateTrackStop(Maintain maintain);
     Boolean updateTrack(Maintain maintain,int state);
     Maintain selectProtectId(Maintain maintain);
     Maintain selectInspectionById(int inspectionId);
