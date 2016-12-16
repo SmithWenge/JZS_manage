@@ -7,6 +7,8 @@
 <head>
     <title>金州站减速顶管理系统</title>
     <meta charset="utf-8">
+    <%-- 避免ie使用兼容模式 --%>
+    <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
     <%--<meta http-equiv="X-UA-Compatible" content="IE=8" />--%>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -16,5 +18,3 @@
 
 </head>
 <body>
-
-     <script ></script>
