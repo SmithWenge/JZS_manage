@@ -273,7 +273,7 @@
                   </c:forEach>
                 </c:if>
               </ul>
-              <li class="col-sm-2 alignR"><b>值班员工作台</b></li>
+              <li class="col-sm-2 alignR"><b>联络员工作台</b></li>
               <ul class="dowebok">
                 <c:if test="${not empty maintains}">
                   <c:forEach items="${maintains}" var="maintain">

@@ -5,7 +5,7 @@
 <div class="panel panel-default" style="float: left;width: 85%;">
     <div class="panel-heading" style="height: 45px;padding-top: 5px;">
         <ul class="nav nav-pills">
-            <li role="presentation" ><a href="${contextPath}/admin/maintain/routeMaintain.action"><span class="glyphicon glyphicon-map-marker"></span>故障管理</a></li>
+            <li role="presentation" ><a href="${contextPath}/admin/maintain/routeMaintainIndex.action"><span class="glyphicon glyphicon-map-marker"></span>故障管理</a></li>
             <c:forEach items="${sessionScope.functions}" var="function">
                 <c:if test="${function.functionId == 43}">
                     <li role="presentation" >

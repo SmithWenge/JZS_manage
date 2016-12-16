@@ -270,17 +270,6 @@ public class MaintainController {
         return "redirect:/admin/maintain/routeIndex.action";
     }
 
-    @RequestMapping(value = "routeMaintain",method = RequestMethod.GET)
-    public ModelAndView routeMaintain(HttpSession session,Pageable pageable) {
-        Maintain maintain = new Maintain();
-        maintain.setFaultState(2);
-        ModelAndView mav = new ModelAndView("admin/maintain/maintain");
-        Page<Maintain> page = maintainService.listMaintain(maintain, pageable);
-        mav.addObject(ConstantFields.PAGE_KEY, page);
-
-        return mav;
-    }
-
     @RequestMapping(value = "/reFinishMaintain", method = RequestMethod.POST)
     public String reFinishMaintain(Maintain maintain,HttpSession session,RedirectAttributes redirectAttributes) throws BatchRollbackException{
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
