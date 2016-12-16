@@ -490,6 +490,19 @@
                 }
             }
         });
+
+        $('#faultForm').validate({
+            rules: {
+                seat: {
+                    required:true
+                }
+            },
+            messages: {
+                seat: {
+                    required:"位置不能为空!"
+                }
+            }
+        });
     });
 </script>
 
