@@ -209,7 +209,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="diaochePass" class="col-sm-3 control-label"><h5 style="color: #AA0000"><b>调车长确认密码</b></h5></label>
+                        <label for="diaochePass" class="col-sm-3 control-label"><h5 style="color: #AA0000"><b>值班员确认密码</b></h5></label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" id="diaochePass" name="diaochePass">
                         </div>

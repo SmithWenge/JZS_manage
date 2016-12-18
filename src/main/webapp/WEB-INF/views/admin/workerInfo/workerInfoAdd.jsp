@@ -27,7 +27,7 @@
             </div>
         </c:if>
         <h1>金州站</h1>
-        <h3>驼峰调车长（单选）</h3>
+        <h3>驼峰值班员（单选）</h3>
         <ul class="dowebok">
             <c:forEach items="${diaoches}" var="diaoche">
                 <li><input type="radio" name="diaoche" data-labelauty="${diaoche.userName}" value="${diaoche.userId}"></li>
@@ -35,7 +35,7 @@
         </ul>
 
         <hr>
-        <h3>驻站联络员（单选）</h3>
+        <h3>驻站防护员（单选）</h3>
         <ul class="dowebok">
             <c:forEach items="${zhibans}" var="zhiban">
                 <li><input type="radio" name="zhiban" data-labelauty="${zhiban.userName}" value="${zhiban.userId}"></li>
@@ -50,7 +50,7 @@
             </c:forEach>
         </ul>
         <hr />
-        <h3>防护员（复选）</h3>
+        <h3>巡检防护员（复选）</h3>
         <ul class="dowebok">
             <c:forEach items="${fanghus}" var="fanghu">
                 <li><input type="checkbox" name="fanghu" data-labelauty="${fanghu.userName}" value="${fanghu.userId}"></li>

@@ -184,7 +184,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="zhibanPeo" class="col-sm-3 control-label">驻站联络员</label>
+            <label for="zhibanPeo" class="col-sm-3 control-label">驻站防护员</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" id="zhibanPeo" name="zhibanPeo" value="${protectRequestPeople.userName}">
             </div>
@@ -255,7 +255,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="diaochePass" class="col-sm-3 control-label"><h5 style="color: #AA0000"><b>调车长确认密码</b></h5></label>
+            <label for="diaochePass" class="col-sm-3 control-label"><h5 style="color: #AA0000"><b>值班员确认密码</b></h5></label>
             <div class="col-sm-9">
               <input type="password" class="form-control" id="diaochePass" name="diaochePass">
             </div>
