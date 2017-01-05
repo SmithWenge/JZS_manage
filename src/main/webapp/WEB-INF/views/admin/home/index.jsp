@@ -57,7 +57,8 @@
         </div>
 
         <c:if test="${empty page}">
-            <h3 style="color: #CC0000">&nbsp;&nbsp;请确定是否导入在岗人员,点击退出进行上岗人员导入</h3>
+            <h3 style="color: #CC0000">&nbsp;&nbsp;下班或换岗请点击退出！</h3>
+            <a href="${contextPath}/admin/workerInfo/routeAdd.action"><h3 style="color: #CC0000">&nbsp;&nbsp;如登陆后忘记进行工作人员登记，请点击此处。</h3></a>
         </c:if>
     </div>
 </div>
