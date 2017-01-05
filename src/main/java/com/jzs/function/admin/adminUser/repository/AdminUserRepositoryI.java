@@ -16,6 +16,8 @@ public interface AdminUserRepositoryI {
     Boolean resetPass(AdminManager adminManager);
     Boolean deleteUser(int userId);
     Boolean deleteUserInfo(int userId);
+    Boolean removeUser(int userId);
+    Boolean removeUserInfo(int userId);
     Boolean reuseUser(int userId);
     Boolean reuseUserInfo(int userId);
     Page<AdminManager> list(Pageable pageable);

@@ -195,6 +195,26 @@ public class AdminUserRepository implements AdminUserRepositoryI{
     }
 
     @Override
+    public Boolean removeUser(int userId) {
+        String sql = "UPDATE jzs_user SET deleteFlag = 1,removeFlag = 1 WHERE userId = ?";
+        Object[] args = {
+                userId
+        };
+
+        return jdbcTemplate.update(sql,args) == 1 ? true:false;
+    }
+
+    @Override
+    public Boolean removeUserInfo(int userId) {
+        String sql = "UPDATE jzs_userinfo SET deleteFlag = 1,removeFlag = 1 WHERE userId = ?";
+        Object[] args = {
+                userId
+        };
+
+        return jdbcTemplate.update(sql,args) == 1 ? true:false;
+    }
+
+    @Override
     public Boolean reuseUser(int userId) {
         String sql = "UPDATE jzs_user SET deleteFlag = 0 WHERE userId = ?";
         Object[] args = {
@@ -216,7 +236,7 @@ public class AdminUserRepository implements AdminUserRepositoryI{
 
     @Override
     public Page<AdminManager> list(Pageable pageable) {
-        String sql = "SELECT I.userId,I.roleId,roleName,userName,userGender,userPost,userTelOne,userLoginName,I.deleteFlag FROM jzs_userinfo AS I LEFT JOIN jzs_user AS U ON I.userId = U.userId LEFT JOIN jzs_role AS R ON I.roleId = R.roleId";
+        String sql = "SELECT I.userId,I.roleId,roleName,userName,userGender,userPost,userTelOne,userLoginName,I.deleteFlag FROM jzs_userinfo AS I LEFT JOIN jzs_user AS U ON I.userId = U.userId LEFT JOIN jzs_role AS R ON I.roleId = R.roleId WHERE I.removeFlag = 0 AND U.removeFlag = 0";
         Object[] args = {
 
         };

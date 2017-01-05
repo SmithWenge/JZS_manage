@@ -83,6 +83,21 @@ public class AdminUserService implements AdminUserServiceI{
     }
 
     @Override
+    public Boolean remove(int userId, String logUser) throws BatchRollbackException {
+        boolean tmp1 = adminUserRepositoryI.removeUser(userId);
+        boolean tmp2 = adminUserRepositoryI.removeUserInfo(userId);
+
+        if (tmp1 && tmp2) {
+            LogContent logContent = new LogContent(logUser, "删除用户ID为" + userId, 1, 2);
+            logRepository.insertLog(logContent);
+        } else {
+            throw new BatchRollbackException();
+        }
+
+        return true;
+    }
+
+    @Override
     public Boolean reuse(int userId, String logUser) throws BatchRollbackException {
         boolean tmp1 = adminUserRepositoryI.reuseUser(userId);
         boolean tmp2 = adminUserRepositoryI.reuseUserInfo(userId);

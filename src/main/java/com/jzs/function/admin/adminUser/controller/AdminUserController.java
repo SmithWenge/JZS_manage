@@ -1,6 +1,5 @@
 package com.jzs.function.admin.adminUser.controller;
 
-import com.google.common.base.Optional;
 import com.jzs.arc.exception.BatchRollbackException;
 import com.jzs.arc.utils.ConstantFields;
 import com.jzs.function.admin.adminUser.AdminManager;
@@ -120,6 +119,7 @@ public class AdminUserController {
         return "redirect:/admin/adminManager/routeEdit/" + adminManager.getUserId() + ".action";
     }
 
+    //停用
     @RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
     public String delete(@PathVariable("userId") int userId, HttpSession session, RedirectAttributes redirectAttributes) throws BatchRollbackException {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
@@ -128,6 +128,26 @@ public class AdminUserController {
         if (adminUserService.delete(userId, logUser)) {
             if (LOG.isInfoEnabled())
                 LOG.info("[MANAGE] [OK] {} delete adminManager's ID {}.", logUser, userId);
+
+            redirectAttributes.addFlashAttribute(ConstantFields.DELETE_SUCCESS_KEY, ConstantFields.DELETE_SUCCESS_MESSAGE);
+
+            return "redirect:/admin/adminManager/routeList.action";
+        }
+
+        redirectAttributes.addFlashAttribute(ConstantFields.DELETE_FAILURE_KEY, ConstantFields.DELETE_FAILURE_MESSAGE);
+
+        return "redirect:/admin/adminManager/routeList.action";
+    }
+
+    //删除
+    @RequestMapping(value = "/remove/{userId}", method = RequestMethod.GET)
+    public String remove(@PathVariable("userId") int userId, HttpSession session, RedirectAttributes redirectAttributes) throws BatchRollbackException {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        String logUser = user.getUserName();
+
+        if (adminUserService.remove(userId, logUser)) {
+            if (LOG.isInfoEnabled())
+                LOG.info("[MANAGE] [OK] {} remove adminManager's ID {}.", logUser, userId);
 
             redirectAttributes.addFlashAttribute(ConstantFields.DELETE_SUCCESS_KEY, ConstantFields.DELETE_SUCCESS_MESSAGE);
 

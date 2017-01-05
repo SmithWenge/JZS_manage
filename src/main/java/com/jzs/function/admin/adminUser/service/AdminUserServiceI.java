@@ -14,6 +14,7 @@ public interface AdminUserServiceI {
     Boolean update(AdminManager adminManager,String LogUser)throws BatchRollbackException;
     Boolean promote(AdminManager adminManager,String LogUser)throws BatchRollbackException;
     Boolean delete(int userId,String logUser)throws BatchRollbackException;
+    Boolean remove(int userId,String logUser)throws BatchRollbackException;
     Boolean reuse(int userId,String logUser)throws BatchRollbackException;
     Page<AdminManager> list(Pageable pageable);
     List<AdminManager> selectRoles();
