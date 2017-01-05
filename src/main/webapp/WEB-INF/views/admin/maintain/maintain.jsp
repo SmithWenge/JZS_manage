@@ -482,11 +482,17 @@
             rules: {
                 protectRemark: {
                     digits:true
+                },
+                diaochePass: {
+                    digits:true
                 }
             },
             messages: {
                 protectRemark: {
                     digits:"请输入整数！"
+                },
+                diaochePass: {
+                    digits:"请输入密码！"
                 }
             }
         });

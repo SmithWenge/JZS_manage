@@ -114,4 +114,51 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  $(function () {
+    $('#addForm').validate({
+      rules: {
+        seat: {
+          required: true
+        },
+        rollingTimes: {
+          required: true
+        },
+        deviceFactory: {
+          required: true
+        },
+        deviceModel: {
+          required: true
+        },
+        stationName: {
+          required: true
+        },
+        stationNum: {
+          required: true
+        }
+      },
+      messages: {
+        seat: {
+          required: "请填写位置"
+        },
+        rollingTimes: {
+          required: "请填写碾压次数"
+        },
+        deviceFactory: {
+          required: "请填写生产厂家"
+        },
+        deviceModel: {
+          required: "请填写型号"
+        },
+        stationName: {
+          required: "请填写所属车站"
+        },
+        stationNum: {
+          required: "请填写所属代码"
+        }
+      }
+    });
+  });
+</script>
+
 <%@ include file="/WEB-INF/include/footer.jsp"%>

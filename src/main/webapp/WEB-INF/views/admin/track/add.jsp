@@ -63,4 +63,52 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#addForm').validate({
+      rules: {
+        placeId: {
+          required: true
+        },
+        trackName: {
+          required: true
+        },
+        trackLength: {
+          required: true
+        },
+        carNumEle: {
+          required: true
+        },
+        carNumFou: {
+          required: true
+        },
+        useable: {
+          required: true
+        }
+      },
+      messages: {
+        placeId: {
+          required: "请填写场名"
+        },
+        trackName: {
+          required: "请填写股道"
+        },
+        trackLength: {
+          required: "请填写股道长度"
+        },
+        carNumEle: {
+          required: "请填写容车数(11m)"
+        },
+        carNumFou: {
+          required: "请填写容车数(14.3m)"
+        },
+        useable: {
+          required: "请填写股道用途"
+        }
+      }
+    });
+  });
+</script>
+
 <%@ include file="/WEB-INF/include/footer.jsp"%>

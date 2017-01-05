@@ -36,4 +36,27 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  $(function () {
+    $('#addForm').validate({
+      rules: {
+        faultTypeName: {
+          required: true
+        },
+        faultSugestion: {
+          required: true
+        }
+      },
+      messages: {
+        faultTypeName: {
+          required: "请填写故障名"
+        },
+        faultSugestion: {
+          required: "请填写处理办法建议"
+        }
+      }
+    });
+  });
+</script>
+
 <%@ include file="/WEB-INF/include/footer.jsp"%>

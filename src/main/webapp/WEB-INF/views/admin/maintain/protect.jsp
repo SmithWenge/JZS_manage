@@ -420,6 +420,40 @@
 <%@include file="/WEB-INF/include/javascript.jsp"%>
 
 <script type="text/javascript">
+
+  //整数验证
+  $('#portectFrom').validate({
+    rules: {
+      protectRemark: {
+        digits:true
+      },
+      diaochePass: {
+        digits:true
+      }
+    },
+    messages: {
+      protectRemark: {
+        digits:"请输入整数！"
+      },
+      diaochePass: {
+        digits:"请输入密码！"
+      }
+    }
+  });
+
+  $('#faultForm').validate({
+    rules: {
+      seat: {
+        required:true
+      }
+    },
+    messages: {
+      seat: {
+        required:"位置不能为空!"
+      }
+    }
+  });
+
   $(function() {
     // 设置table表格中的行高
     var $height = $('#paginationTable td').height() + 'px';
@@ -565,33 +599,6 @@
           }
         }
       },1000);
-    });
-
-    //整数验证
-    $('#portectFrom').validate({
-      rules: {
-        protectRemark: {
-          digits:true
-        }
-      },
-      messages: {
-        protectRemark: {
-          digits:"请输入整数！"
-        }
-      }
-    });
-
-    $('#faultForm').validate({
-      rules: {
-        seat: {
-          required:true
-        }
-      },
-      messages: {
-        seat: {
-          required:"位置不能为空!"
-        }
-      }
     });
   });
 </script>

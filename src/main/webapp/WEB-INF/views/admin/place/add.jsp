@@ -30,4 +30,21 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  $(function () {
+    $('#addForm').validate({
+      rules: {
+        placeName: {
+          required: true
+        }
+      },
+      messages: {
+        userName: {
+          required: "请填写场名"
+        }
+      }
+    });
+  });
+</script>
+
 <%@ include file="/WEB-INF/include/footer.jsp"%>

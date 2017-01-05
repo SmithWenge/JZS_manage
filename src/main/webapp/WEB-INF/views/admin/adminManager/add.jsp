@@ -68,11 +68,15 @@
     </div>
   </div>
 </div>
+
 <script type="text/javascript">
   $(function () {
     $('#addForm').validate({
       rules: {
         userName: {
+          required: true
+        },
+        userLoginName: {
           required: true
         },
         userTelOne: {
@@ -84,6 +88,9 @@
       messages: {
         userName: {
           required: "请填写用户姓名"
+        },
+        userLoginName: {
+          required: "请填写用户登录名"
         },
         userTelOne: {
           required: "请填写用户电话",
