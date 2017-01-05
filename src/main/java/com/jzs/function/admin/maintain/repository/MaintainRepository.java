@@ -36,7 +36,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public List<Maintain> selectProtectPeople() {
-        String sql = "SELECT userName FROM jzs_temattendance AS A LEFT JOIN jzs_user AS U ON A.userId = U.userId WHERE A.deleteFlag = 0 AND A.attendanceDate = ? AND userPost = 1 OR A.deleteFlag = 0 AND userPost = 5 ";
+        String sql = "SELECT DISTINCT userName FROM jzs_temattendance AS A LEFT JOIN jzs_user AS U ON A.userId = U.userId WHERE A.deleteFlag = 0 AND userPost = 1 OR A.deleteFlag = 0 AND userPost = 5 ";
 
         try {
             return jdbcTemplate.query(sql, new SelectPeopleRowMapper());
@@ -58,7 +58,7 @@ public class MaintainRepository implements MaintainRepositoryI{
 
     @Override
     public List<Maintain> selectWorker() {
-        String sql = "SELECT userName FROM jzs_temattendance AS A LEFT JOIN jzs_user AS U ON A.userId = U.userId WHERE A.deleteFlag = 0 AND userPost = 1 OR A.deleteFlag = 0 AND userPost = 5 ";
+        String sql = "SELECT DISTINCT userName FROM jzs_temattendance AS A LEFT JOIN jzs_user AS U ON A.userId = U.userId WHERE A.deleteFlag = 0 AND userPost = 1 OR A.deleteFlag = 0 AND userPost = 5 ";
 
         try {
             return jdbcTemplate.query(sql, new SelectPeopleRowMapper());

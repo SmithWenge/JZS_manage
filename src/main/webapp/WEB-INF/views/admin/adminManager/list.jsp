@@ -93,6 +93,9 @@
                       <button type="button" class="btn btn-danger">启用</button>
                     </a>
                   </c:if>
+                  <a href="${contextPath}/admin/adminManager/remove/${admin.userId}.action" style="text-decoration: none;" >
+                    <button type="button" class="btn btn-danger">删除</button>
+                  </a>
                 </c:if>
               </c:forEach>
               </td>
